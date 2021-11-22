@@ -10,10 +10,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.fathzer.soft.javaluator.DoubleEvaluator;
+
 public class Calc {
 
 	private JFrame frame;
-	private String working_equation = "";
+	private String working_expression = "";
 	private JTextField screen;
 
 	/**
@@ -63,8 +65,8 @@ public class Calc {
 		panel_buttons.add(btn_7);
 		btn_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_7.getText();
-				screen.setText(working_equation);
+				working_expression += btn_7.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -72,8 +74,8 @@ public class Calc {
 		panel_buttons.add(btn_8);
 		btn_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_8.getText();
-				screen.setText(working_equation);
+				working_expression += btn_8.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -81,8 +83,8 @@ public class Calc {
 		panel_buttons.add(btn_9);
 		btn_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_9.getText();
-				screen.setText(working_equation);
+				working_expression += btn_9.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -90,10 +92,10 @@ public class Calc {
 		panel_buttons.add(btn_DEL);
 		btn_DEL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// remove the last char from working_equation
-				// https://www.javatpoint.com/how-to-remove-last-character-from-string-in-java
-				screen.setText(working_equation.substring(0, working_equation.length()-1));
-				working_equation = screen.getText();
+				// remove the last char from working_expression
+				// (https://www.javatpoint.com/how-to-remove-last-character-from-string-in-java)
+				screen.setText(working_expression.substring(0, working_expression.length()-1));
+				working_expression = screen.getText();
 			}
 		});
 		btn_DEL.setBackground(Color.PINK);
@@ -108,8 +110,8 @@ public class Calc {
 		panel_buttons.add(btn_4);
 		btn_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_4.getText();
-				screen.setText(working_equation);
+				working_expression += btn_4.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -117,8 +119,8 @@ public class Calc {
 		panel_buttons.add(btn_5);
 		btn_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_5.getText();
-				screen.setText(working_equation);
+				working_expression += btn_5.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -126,8 +128,8 @@ public class Calc {
 		panel_buttons.add(btn_6);
 		btn_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_6.getText();
-				screen.setText(working_equation);
+				working_expression += btn_6.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -135,8 +137,8 @@ public class Calc {
 		panel_buttons.add(btn_multiply);
 		btn_multiply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_multiply.getText();
-				screen.setText(working_equation);
+				working_expression += btn_multiply.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -144,8 +146,8 @@ public class Calc {
 		panel_buttons.add(btn_divide);
 		btn_divide.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_divide.getText();
-				screen.setText(working_equation);
+				working_expression += btn_divide.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -153,8 +155,8 @@ public class Calc {
 		panel_buttons.add(btn_1);
 		btn_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_1.getText();
-				screen.setText(working_equation);
+				working_expression += btn_1.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -162,8 +164,8 @@ public class Calc {
 		panel_buttons.add(btn_2);
 		btn_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_2.getText();
-				screen.setText(working_equation);
+				working_expression += btn_2.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -171,8 +173,8 @@ public class Calc {
 		panel_buttons.add(btn_3);
 		btn_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_3.getText();
-				screen.setText(working_equation);
+				working_expression += btn_3.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -180,8 +182,8 @@ public class Calc {
 		panel_buttons.add(btn_plus);
 		btn_plus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_plus.getText();
-				screen.setText(working_equation);
+				working_expression += btn_plus.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -189,8 +191,8 @@ public class Calc {
 		panel_buttons.add(btn_minus);
 		btn_minus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_minus.getText();
-				screen.setText(working_equation);
+				working_expression += btn_minus.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -198,8 +200,8 @@ public class Calc {
 		panel_buttons.add(btn_0);
 		btn_0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_0.getText();
-				screen.setText(working_equation);
+				working_expression += btn_0.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -207,8 +209,8 @@ public class Calc {
 		panel_buttons.add(btn_decimal);
 		btn_decimal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_equation += btn_decimal.getText();
-				screen.setText(working_equation);
+				working_expression += btn_decimal.getText();
+				screen.setText(working_expression);
 			}
 		});
 		
@@ -222,10 +224,28 @@ public class Calc {
 		panel_buttons.add(btn_equals);
 		btn_equals.setBackground(new Color(153, 204, 255));
 		btn_equals.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TODO
-				//working_equation = (int) working_equation;
-				//screen.setText(working_equation);			//cast to a double
+			public void actionPerformed(ActionEvent e) {	
+				// (http://javaluator.sourceforge.net/en/doc/tutorial.php)
+				/*
+				 * Additional resources...
+				 * Methods for this: https://www.baeldung.com/java-evaluate-math-expression-string
+				 * Reason to use Javaluator: https://stackoverflow.com/q/3422673/8042538
+				 * Nashorn JS Engine is removed in JDK15: https://stackoverflow.com/q/67731926/8042538,
+				 * 		so we *can't* use the Java scripting API to do this
+				 * Javaluator: can use Maven
+				 * - https://learnjava.co.in/how-to-add-maven-dependencies-via-eclipse/
+				 * - https://learnjava.co.in/how-to-create-a-maven-project-in-eclipse/
+				 * - https://wasiqb.github.io/blogs/mavenproject-vs-javaproject
+				 * Or can just download & add the library manually:
+				 * - https://stackoverflow.com/q/2824515/8042538	<--
+				 */
+				// Create a new evaluator
+			    DoubleEvaluator evaluator = new DoubleEvaluator();
+			    // Evaluate the working_expression
+			    Double answer = evaluator.evaluate(working_expression);
+			    // Ouput the result to the screen
+			    String output = String.valueOf(answer); // (https://stackoverflow.com/a/15530411/8042538)
+			    screen.setText(output);
 			}
 		});
 	}
