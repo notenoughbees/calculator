@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.fathzer.soft.javaluator.DoubleEvaluator;
+import java.awt.Font;
 
 public class Calc {
 
@@ -55,6 +56,7 @@ public class Calc {
 		panel_screen.setLayout(new GridLayout(1, 1, 0, 0));
 		
 		screen = new JTextField();
+		screen.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		panel_screen.add(screen);
 				
 		JPanel panel_buttons = new JPanel();
@@ -62,6 +64,7 @@ public class Calc {
 		panel_buttons.setLayout(new GridLayout(4, 5, 8, 8));
 		
 		JButton btn_7 = new JButton("7");
+		btn_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_7);
 		btn_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -71,6 +74,7 @@ public class Calc {
 		});
 		
 		JButton btn_8 = new JButton("8");
+		btn_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_8);
 		btn_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -80,6 +84,7 @@ public class Calc {
 		});
 		
 		JButton btn_9 = new JButton("9");
+		btn_9.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_9);
 		btn_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -89,6 +94,7 @@ public class Calc {
 		});
 		
 		JButton btn_DEL = new JButton("DEL");
+		btn_DEL.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_DEL);
 		btn_DEL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -102,11 +108,13 @@ public class Calc {
 		btn_DEL.setToolTipText("Backspace");
 		
 		JButton btn_CE = new JButton("CE");
+		btn_CE.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_CE);
 		btn_CE.setBackground(Color.PINK);
 		btn_CE.setToolTipText("Clear Entry");
 		
 		JButton btn_4 = new JButton("4");
+		btn_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_4);
 		btn_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -116,6 +124,7 @@ public class Calc {
 		});
 		
 		JButton btn_5 = new JButton("5");
+		btn_5.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_5);
 		btn_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -125,6 +134,7 @@ public class Calc {
 		});
 		
 		JButton btn_6 = new JButton("6");
+		btn_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_6);
 		btn_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,6 +144,7 @@ public class Calc {
 		});
 		
 		JButton btn_multiply = new JButton("*");
+		btn_multiply.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_multiply);
 		btn_multiply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -143,6 +154,7 @@ public class Calc {
 		});
 		
 		JButton btn_divide = new JButton("/");
+		btn_divide.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_divide);
 		btn_divide.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -152,6 +164,7 @@ public class Calc {
 		});
 		
 		JButton btn_1 = new JButton("1");
+		btn_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_1);
 		btn_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -161,6 +174,7 @@ public class Calc {
 		});
 		
 		JButton btn_2 = new JButton("2");
+		btn_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_2);
 		btn_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -170,6 +184,7 @@ public class Calc {
 		});
 		
 		JButton btn_3 = new JButton("3");
+		btn_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_3);
 		btn_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -179,6 +194,7 @@ public class Calc {
 		});
 		
 		JButton btn_plus = new JButton("+");
+		btn_plus.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_plus);
 		btn_plus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -188,6 +204,7 @@ public class Calc {
 		});
 		
 		JButton btn_minus = new JButton("-");
+		btn_minus.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_minus);
 		btn_minus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -197,6 +214,7 @@ public class Calc {
 		});
 		
 		JButton btn_0 = new JButton("0");
+		btn_0.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_0);
 		btn_0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -206,6 +224,7 @@ public class Calc {
 		});
 		
 		JButton btn_decimal = new JButton(".");
+		btn_decimal.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_decimal);
 		btn_decimal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -215,12 +234,15 @@ public class Calc {
 		});
 		
 		JButton btnNewButton_7 = new JButton("New button");
+		btnNewButton_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btnNewButton_7);
 		
 		JButton btnNewButton_8 = new JButton("New button");
+		btnNewButton_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btnNewButton_8);
 		
 		JButton btn_equals = new JButton("=");
+		btn_equals.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_equals);
 		btn_equals.setBackground(new Color(153, 204, 255));
 		btn_equals.addActionListener(new ActionListener() {
