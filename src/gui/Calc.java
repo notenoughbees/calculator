@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import com.fathzer.soft.javaluator.DoubleEvaluator;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
+import javax.swing.JLabel;
 
 public class Calc {
 
@@ -51,7 +51,7 @@ public class Calc {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 450, 350);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(2, 1, 8, 8));
 		
@@ -74,7 +74,23 @@ public class Calc {
 				
 		JPanel panel_buttons = new JPanel();
 		frame.getContentPane().add(panel_buttons);
-		panel_buttons.setLayout(new GridLayout(4, 5, 8, 8));
+		panel_buttons.setLayout(new GridLayout(5, 5, 8, 8));
+		
+		JButton btn_shift = new JButton("SHIFT");
+		btn_shift.setBackground(new Color(240, 230, 140));
+		panel_buttons.add(btn_shift);
+		
+		JLabel lbl_9 = new JLabel("New label");
+		panel_buttons.add(lbl_9);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		panel_buttons.add(lblNewLabel);
+		
+		JLabel lbl_DEL = new JLabel("CE");
+		panel_buttons.add(lbl_DEL);
+		
+		JLabel lbl_CA = new JLabel("New label");
+		panel_buttons.add(lbl_CA);
 		
 		JButton btn_7 = new JButton("7");
 		btn_7.setBackground(new Color(245, 245, 245));
@@ -109,10 +125,10 @@ public class Calc {
 			}
 		});
 		
-		JButton btn_DEL = new JButton("DEL");
-		btn_DEL.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_DEL);
-		btn_DEL.addActionListener(new ActionListener() {
+		JButton btn_del = new JButton("DEL");
+		btn_del.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_buttons.add(btn_del);
+		btn_del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					// remove the last char from working_expression
@@ -126,14 +142,18 @@ public class Calc {
 				
 			}
 		});
-		btn_DEL.setBackground(Color.PINK);
-		btn_DEL.setToolTipText("Backspace");
+		btn_del.setBackground(Color.PINK);
+		btn_del.setToolTipText("Backspace");
 		
-		JButton btn_CE = new JButton("CE");
-		btn_CE.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_CE);
-		btn_CE.setBackground(Color.PINK);
-		btn_CE.setToolTipText("Clear Entry");
+		JButton btn_ca = new JButton("CA");
+		btn_ca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btn_ca.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_buttons.add(btn_ca);
+		btn_ca.setBackground(Color.PINK);
+		btn_ca.setToolTipText("Clear All");
 		
 		JButton btn_4 = new JButton("4");
 		btn_4.setBackground(new Color(245, 245, 245));
