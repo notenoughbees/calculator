@@ -18,10 +18,13 @@ import javax.swing.JLabel;
 public class Calc {
 
 	private JFrame frame;
-	private String working_expression = "";
-	private Double answer;
 	private JTextField screen_working_expression;
 	private JTextField screen_answer;
+	private Boolean is_shift = false;
+	private String working_expression = "";
+	private Double answer;
+	private JTextField screen_options;
+
 
 	/**
 	 * Launch the application.
@@ -57,7 +60,7 @@ public class Calc {
 		
 		JPanel panel_screen = new JPanel();
 		frame.getContentPane().add(panel_screen);
-		panel_screen.setLayout(new GridLayout(2, 1, 0, 0));
+		panel_screen.setLayout(new GridLayout(3, 1, 0, 0));
 		
 		screen_working_expression = new JTextField();
 		screen_working_expression.setHorizontalAlignment(SwingConstants.LEFT);
@@ -71,26 +74,68 @@ public class Calc {
 		screen_answer.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		panel_screen.add(screen_answer);
 		screen_answer.setColumns(10);
+		
+		screen_options = new JTextField();
+		screen_options.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		screen_options.setEditable(false);
+		panel_screen.add(screen_options);
+		screen_options.setColumns(10);
 				
 		JPanel panel_buttons = new JPanel();
 		frame.getContentPane().add(panel_buttons);
-		panel_buttons.setLayout(new GridLayout(5, 5, 8, 8));
+		panel_buttons.setLayout(new GridLayout(6, 5, 8, 8));
 		
 		JButton btn_shift = new JButton("SHIFT");
+		btn_shift.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (! is_shift) {
+					is_shift = true;
+					screen_options.setText("SHIFT: ON");
+				}
+				else {
+					is_shift = false;
+					// remove the text saying that Shift is on
+					screen_options.setText("");
+				}
+			}
+		});
 		btn_shift.setBackground(new Color(240, 230, 140));
 		panel_buttons.add(btn_shift);
 		
-		JLabel lbl_9 = new JLabel("New label");
+		JButton btnNewButton_7_1 = new JButton("");
+		btnNewButton_7_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_7_1.setBackground(new Color(220, 220, 220));
+		panel_buttons.add(btnNewButton_7_1);
+		
+		JButton btnNewButton_7_2 = new JButton("");
+		btnNewButton_7_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_7_2.setBackground(new Color(220, 220, 220));
+		panel_buttons.add(btnNewButton_7_2);
+		
+		JButton btnNewButton_7_3 = new JButton("");
+		btnNewButton_7_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_7_3.setBackground(new Color(220, 220, 220));
+		panel_buttons.add(btnNewButton_7_3);
+		
+		JButton btnNewButton_7_4 = new JButton("");
+		btnNewButton_7_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_7_4.setBackground(new Color(220, 220, 220));
+		panel_buttons.add(btnNewButton_7_4);
+		
+		JLabel lbl_7 = new JLabel("");
+		panel_buttons.add(lbl_7);
+		
+		JLabel lbl_8 = new JLabel("");
+		panel_buttons.add(lbl_8);
+		
+		JLabel lbl_9 = new JLabel("");
 		panel_buttons.add(lbl_9);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		panel_buttons.add(lblNewLabel);
+		JLabel lbl_del = new JLabel("CE");
+		panel_buttons.add(lbl_del);
 		
-		JLabel lbl_DEL = new JLabel("CE");
-		panel_buttons.add(lbl_DEL);
-		
-		JLabel lbl_CA = new JLabel("New label");
-		panel_buttons.add(lbl_CA);
+		JLabel lbl_ca = new JLabel("");
+		panel_buttons.add(lbl_ca);
 		
 		JButton btn_7 = new JButton("7");
 		btn_7.setBackground(new Color(245, 245, 245));
@@ -130,16 +175,24 @@ public class Calc {
 		panel_buttons.add(btn_del);
 		btn_del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					// remove the last char from working_expression
-					// (https://www.javatpoint.com/how-to-remove-last-character-from-string-in-java)
-					screen_working_expression.setText(working_expression.substring(0, working_expression.length()-1));
-					working_expression = screen_working_expression.getText();
-					}
-				//if DEL is pressed when there is nothing to delete:
-				catch(StringIndexOutOfBoundsException e1)
-				{}
+				if (! is_shift) {
+					System.out.println("[ DEL ]");
+					try {
+						// remove the last char from working_expression
+						// (https://www.javatpoint.com/how-to-remove-last-character-from-string-in-java)
+						screen_working_expression.setText(working_expression.substring(0, working_expression.length()-1));
+						working_expression = screen_working_expression.getText();
+						}
+					//if DEL is pressed when there is nothing to delete:
+					catch(StringIndexOutOfBoundsException e1)
+					{}
+				}
 				
+				else {
+					System.out.println("[ CE ]");
+					is_shift = false;
+					screen_options.setText("");
+				}
 			}
 		});
 		btn_del.setBackground(Color.PINK);
@@ -152,7 +205,7 @@ public class Calc {
 		});
 		btn_ca.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btn_ca);
-		btn_ca.setBackground(Color.PINK);
+		btn_ca.setBackground(new Color(250, 128, 114));
 		btn_ca.setToolTipText("Clear All");
 		
 		JButton btn_4 = new JButton("4");
@@ -287,12 +340,12 @@ public class Calc {
 			}
 		});
 		
-		JButton btnNewButton_7 = new JButton("New button");
+		JButton btnNewButton_7 = new JButton("");
 		btnNewButton_7.setBackground(new Color(220, 220, 220));
 		btnNewButton_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btnNewButton_7);
 		
-		JButton btnNewButton_8 = new JButton("New button");
+		JButton btnNewButton_8 = new JButton("");
 		btnNewButton_8.setBackground(new Color(220, 220, 220));
 		btnNewButton_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons.add(btnNewButton_8);
