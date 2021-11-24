@@ -1,10 +1,13 @@
 package gui;
 
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
@@ -20,6 +23,9 @@ public class Calc {
 	private JFrame frame;
 	private JTextField screen_working_expression;
 	private JTextField screen_answer;
+	private Dimension DEFAULT_LABEL_SIZE = new Dimension(64, 0);
+	private Dimension DEFAULT_BUTTON_SIZE = new Dimension(64, 32);
+	private Integer DEFAULT_PADDING = 5;
 	private Boolean is_shift = false;
 	private String working_expression = "";
 	private Double answer;
@@ -53,15 +59,22 @@ public class Calc {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		//================ LEVEL 1 ================
+		//frame for window
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 350);
+		frame.setBounds(100, 100, 360, 350);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new GridLayout(2, 1, 8, 8));
+		frame.getContentPane().setLayout(new FlowLayout());
 		
+		//================ LEVEL 2 ================ Parent: frame
+		//top screen for calculator
 		JPanel panel_screen = new JPanel();
 		frame.getContentPane().add(panel_screen);
 		panel_screen.setLayout(new GridLayout(3, 1, 0, 0));
 		
+		panel_screen.setPreferredSize(new Dimension(340, 90));
+		
+		//================ LEVEL 3 ================ Parent: panel_screen
 		screen_working_expression = new JTextField();
 		screen_working_expression.setHorizontalAlignment(SwingConstants.LEFT);
 		screen_working_expression.setEditable(false);
@@ -81,11 +94,53 @@ public class Calc {
 		panel_screen.add(screen_options);
 		screen_options.setColumns(10);
 				
-		JPanel panel_buttons = new JPanel();
-		frame.getContentPane().add(panel_buttons);
-		panel_buttons.setLayout(new GridLayout(6, 5, 8, 8));
+		//================ LEVEL 2 ================ Parent: frame
+		//panel to hold buttons and labels for the calculator
+		JPanel panel_lower = new JPanel();
+		frame.getContentPane().add(panel_lower);
+		panel_lower.setLayout(new FlowLayout());
+		panel_lower.setPreferredSize(new Dimension(360, 200));
+				
+				
+		//================ LEVEL 3 ================ Parent: panel_lower
+		//buttons for calculator
+		JPanel panel_buttons1 = new JPanel();
+		panel_lower.add(panel_buttons1);
+		panel_buttons1.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
 		
+		//labels for buttons
+		JPanel panel_labels1 = new JPanel();
+		panel_lower.add(panel_labels1);
+		panel_labels1.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
+		
+		JPanel panel_buttons2 = new JPanel();
+		panel_lower.add(panel_buttons2);
+		panel_buttons2.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
+		
+		JPanel panel_buttons3 = new JPanel();
+		panel_lower.add(panel_buttons3);
+		panel_buttons3.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
+		
+		JPanel panel_buttons4 = new JPanel();
+		panel_lower.add(panel_buttons4);
+		panel_buttons4.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
+		
+		JPanel panel_buttons5 = new JPanel();
+		panel_lower.add(panel_buttons5);
+		panel_buttons5.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
+		
+		
+
+		
+		
+		
+		//================ LEVEL 4 ================ Parent: panel_buttonsX, panel_labelsX
 		JButton btn_shift = new JButton("SHIFT");
+		//Set the preferred size of the first button in every row. Each row gets its own grid, so
+		//  we must do this for each one, and as the sizes of every component in a grid layout will
+		//  be the same size, we only have tho set the size for one of the components in the grid.
+		btn_shift.setPreferredSize(DEFAULT_BUTTON_SIZE);
+		btn_shift.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btn_shift.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (! is_shift) {
@@ -100,47 +155,49 @@ public class Calc {
 			}
 		});
 		btn_shift.setBackground(new Color(240, 230, 140));
-		panel_buttons.add(btn_shift);
+		panel_buttons1.add(btn_shift);
 		
 		JButton btnNewButton_7_1 = new JButton("");
 		btnNewButton_7_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton_7_1.setBackground(new Color(220, 220, 220));
-		panel_buttons.add(btnNewButton_7_1);
+		panel_buttons1.add(btnNewButton_7_1);
 		
 		JButton btnNewButton_7_2 = new JButton("");
 		btnNewButton_7_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton_7_2.setBackground(new Color(220, 220, 220));
-		panel_buttons.add(btnNewButton_7_2);
+		panel_buttons1.add(btnNewButton_7_2);
 		
 		JButton btnNewButton_7_3 = new JButton("");
 		btnNewButton_7_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton_7_3.setBackground(new Color(220, 220, 220));
-		panel_buttons.add(btnNewButton_7_3);
+		panel_buttons1.add(btnNewButton_7_3);
 		
 		JButton btnNewButton_7_4 = new JButton("");
 		btnNewButton_7_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton_7_4.setBackground(new Color(220, 220, 220));
-		panel_buttons.add(btnNewButton_7_4);
+		panel_buttons1.add(btnNewButton_7_4);
 		
 		JLabel lbl_7 = new JLabel("");
-		panel_buttons.add(lbl_7);
+		lbl_7.setPreferredSize(DEFAULT_LABEL_SIZE);
+		panel_labels1.add(lbl_7);
 		
 		JLabel lbl_8 = new JLabel("");
-		panel_buttons.add(lbl_8);
+		panel_labels1.add(lbl_8);
 		
 		JLabel lbl_9 = new JLabel("");
-		panel_buttons.add(lbl_9);
+		panel_labels1.add(lbl_9);
 		
 		JLabel lbl_del = new JLabel("CE");
-		panel_buttons.add(lbl_del);
+		panel_labels1.add(lbl_del);
 		
 		JLabel lbl_ca = new JLabel("");
-		panel_buttons.add(lbl_ca);
+		panel_labels1.add(lbl_ca);
 		
 		JButton btn_7 = new JButton("7");
+		btn_7.setPreferredSize(DEFAULT_BUTTON_SIZE);
 		btn_7.setBackground(new Color(245, 245, 245));
 		btn_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_7);
+		panel_buttons2.add(btn_7);
 		btn_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_7.getText();
@@ -151,7 +208,7 @@ public class Calc {
 		JButton btn_8 = new JButton("8");
 		btn_8.setBackground(new Color(245, 245, 245));
 		btn_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_8);
+		panel_buttons2.add(btn_8);
 		btn_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_8.getText();
@@ -162,7 +219,7 @@ public class Calc {
 		JButton btn_9 = new JButton("9");
 		btn_9.setBackground(new Color(245, 245, 245));
 		btn_9.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_9);
+		panel_buttons2.add(btn_9);
 		btn_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_9.getText();
@@ -172,7 +229,7 @@ public class Calc {
 		
 		JButton btn_del = new JButton("DEL");
 		btn_del.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_del);
+		panel_buttons2.add(btn_del);
 		btn_del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (! is_shift) {
@@ -204,14 +261,15 @@ public class Calc {
 			}
 		});
 		btn_ca.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_ca);
+		panel_buttons2.add(btn_ca);
 		btn_ca.setBackground(new Color(250, 128, 114));
 		btn_ca.setToolTipText("Clear All");
 		
 		JButton btn_4 = new JButton("4");
+		btn_4.setPreferredSize(DEFAULT_BUTTON_SIZE);
 		btn_4.setBackground(new Color(245, 245, 245));
 		btn_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_4);
+		panel_buttons3.add(btn_4);
 		btn_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_4.getText();
@@ -222,7 +280,7 @@ public class Calc {
 		JButton btn_5 = new JButton("5");
 		btn_5.setBackground(new Color(245, 245, 245));
 		btn_5.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_5);
+		panel_buttons3.add(btn_5);
 		btn_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_5.getText();
@@ -233,7 +291,7 @@ public class Calc {
 		JButton btn_6 = new JButton("6");
 		btn_6.setBackground(new Color(245, 245, 245));
 		btn_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_6);
+		panel_buttons3.add(btn_6);
 		btn_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_6.getText();
@@ -244,7 +302,7 @@ public class Calc {
 		JButton btn_multiply = new JButton("*");
 		btn_multiply.setBackground(new Color(220, 220, 220));
 		btn_multiply.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_multiply);
+		panel_buttons3.add(btn_multiply);
 		btn_multiply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_multiply.getText();
@@ -255,7 +313,7 @@ public class Calc {
 		JButton btn_divide = new JButton("/");
 		btn_divide.setBackground(new Color(220, 220, 220));
 		btn_divide.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_divide);
+		panel_buttons3.add(btn_divide);
 		btn_divide.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_divide.getText();
@@ -264,9 +322,10 @@ public class Calc {
 		});
 		
 		JButton btn_1 = new JButton("1");
+		btn_1.setPreferredSize(DEFAULT_BUTTON_SIZE);
 		btn_1.setBackground(new Color(245, 245, 245));
 		btn_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_1);
+		panel_buttons4.add(btn_1);
 		btn_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_1.getText();
@@ -277,7 +336,7 @@ public class Calc {
 		JButton btn_2 = new JButton("2");
 		btn_2.setBackground(new Color(245, 245, 245));
 		btn_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_2);
+		panel_buttons4.add(btn_2);
 		btn_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_2.getText();
@@ -288,7 +347,7 @@ public class Calc {
 		JButton btn_3 = new JButton("3");
 		btn_3.setBackground(new Color(245, 245, 245));
 		btn_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_3);
+		panel_buttons4.add(btn_3);
 		btn_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_3.getText();
@@ -299,7 +358,7 @@ public class Calc {
 		JButton btn_plus = new JButton("+");
 		btn_plus.setBackground(new Color(220, 220, 220));
 		btn_plus.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_plus);
+		panel_buttons4.add(btn_plus);
 		btn_plus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_plus.getText();
@@ -310,7 +369,7 @@ public class Calc {
 		JButton btn_minus = new JButton("-");
 		btn_minus.setBackground(new Color(220, 220, 220));
 		btn_minus.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_minus);
+		panel_buttons4.add(btn_minus);
 		btn_minus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_minus.getText();
@@ -319,9 +378,10 @@ public class Calc {
 		});
 		
 		JButton btn_0 = new JButton("0");
+		btn_0.setPreferredSize(DEFAULT_BUTTON_SIZE);
 		btn_0.setBackground(new Color(245, 245, 245));
 		btn_0.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_0);
+		panel_buttons5.add(btn_0);
 		btn_0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_0.getText();
@@ -332,7 +392,7 @@ public class Calc {
 		JButton btn_decimal = new JButton(".");
 		btn_decimal.setBackground(new Color(245, 245, 245));
 		btn_decimal.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_decimal);
+		panel_buttons5.add(btn_decimal);
 		btn_decimal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				working_expression += btn_decimal.getText();
@@ -343,16 +403,16 @@ public class Calc {
 		JButton btnNewButton_7 = new JButton("");
 		btnNewButton_7.setBackground(new Color(220, 220, 220));
 		btnNewButton_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btnNewButton_7);
+		panel_buttons5.add(btnNewButton_7);
 		
 		JButton btnNewButton_8 = new JButton("");
 		btnNewButton_8.setBackground(new Color(220, 220, 220));
 		btnNewButton_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btnNewButton_8);
+		panel_buttons5.add(btnNewButton_8);
 		
 		JButton btn_equals = new JButton("=");
 		btn_equals.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons.add(btn_equals);
+		panel_buttons5.add(btn_equals);
 		btn_equals.setBackground(new Color(153, 204, 255));
 		btn_equals.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
