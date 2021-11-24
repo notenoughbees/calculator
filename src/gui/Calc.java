@@ -1,31 +1,29 @@
 package gui;
 
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import java.awt.GridLayout;
+import com.fathzer.soft.javaluator.DoubleEvaluator;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import com.fathzer.soft.javaluator.DoubleEvaluator;
-import java.awt.Font;
 import javax.swing.SwingConstants;
-import javax.swing.JLabel;
 
 public class Calc {
 
 	private JFrame frame;
 	private JTextField screen_working_expression;
 	private JTextField screen_answer;
+	private Integer DEFAULT_PADDING = 5;
 	private Dimension DEFAULT_LABEL_SIZE = new Dimension(64, 0);
 	private Dimension DEFAULT_BUTTON_SIZE = new Dimension(64, 32);
-	private Integer DEFAULT_PADDING = 5;
 	private Boolean is_shift = false;
 	private String working_expression = "";
 	private Double answer;
@@ -200,8 +198,7 @@ public class Calc {
 		panel_buttons2.add(btn_7);
 		btn_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_7.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_7.getText());
 			}
 		});
 		
@@ -211,8 +208,7 @@ public class Calc {
 		panel_buttons2.add(btn_8);
 		btn_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_8.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_8.getText());
 			}
 		});
 		
@@ -222,8 +218,7 @@ public class Calc {
 		panel_buttons2.add(btn_9);
 		btn_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_9.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_9.getText());
 			}
 		});
 		
@@ -258,6 +253,9 @@ public class Calc {
 		JButton btn_ca = new JButton("CA");
 		btn_ca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				working_expression = "";
+				screen_working_expression.setText("");
+				screen_answer.setText("");
 			}
 		});
 		btn_ca.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -272,8 +270,7 @@ public class Calc {
 		panel_buttons3.add(btn_4);
 		btn_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_4.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_4.getText());
 			}
 		});
 		
@@ -283,8 +280,7 @@ public class Calc {
 		panel_buttons3.add(btn_5);
 		btn_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_5.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_5.getText());
 			}
 		});
 		
@@ -294,8 +290,7 @@ public class Calc {
 		panel_buttons3.add(btn_6);
 		btn_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_6.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_6.getText());
 			}
 		});
 		
@@ -305,8 +300,7 @@ public class Calc {
 		panel_buttons3.add(btn_multiply);
 		btn_multiply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_multiply.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_multiply.getText());
 			}
 		});
 		
@@ -316,8 +310,7 @@ public class Calc {
 		panel_buttons3.add(btn_divide);
 		btn_divide.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_divide.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_divide.getText());
 			}
 		});
 		
@@ -328,8 +321,7 @@ public class Calc {
 		panel_buttons4.add(btn_1);
 		btn_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_1.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_1.getText());
 			}
 		});
 		
@@ -339,8 +331,7 @@ public class Calc {
 		panel_buttons4.add(btn_2);
 		btn_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_2.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_2.getText());
 			}
 		});
 		
@@ -350,8 +341,7 @@ public class Calc {
 		panel_buttons4.add(btn_3);
 		btn_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_3.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_3.getText());
 			}
 		});
 		
@@ -361,8 +351,7 @@ public class Calc {
 		panel_buttons4.add(btn_plus);
 		btn_plus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_plus.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_plus.getText());
 			}
 		});
 		
@@ -372,8 +361,7 @@ public class Calc {
 		panel_buttons4.add(btn_minus);
 		btn_minus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_minus.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_minus.getText());
 			}
 		});
 		
@@ -384,8 +372,7 @@ public class Calc {
 		panel_buttons5.add(btn_0);
 		btn_0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_0.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_0.getText());
 			}
 		});
 		
@@ -395,8 +382,7 @@ public class Calc {
 		panel_buttons5.add(btn_decimal);
 		btn_decimal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression += btn_decimal.getText();
-				screen_working_expression.setText(working_expression);
+				addBtnContentsToWorkingExpression(btn_decimal.getText());
 			}
 		});
 		
@@ -462,6 +448,16 @@ public class Calc {
 			    
 			}
 		});
+	}
+	
+	
+	/**
+	 * The standard action for a button: add the text shown on that button to the current expression.
+	 * @param btnText
+	 */
+	private void addBtnContentsToWorkingExpression(String btnText) {
+		working_expression += btnText;
+		screen_working_expression.setText(working_expression);
 	}
 
 }
