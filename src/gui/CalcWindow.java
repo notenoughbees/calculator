@@ -9,6 +9,8 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +19,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -79,19 +82,17 @@ public class CalcWindow {
 		menuBar.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		panel_menu.add(menuBar);
 		
+		//configuration menu
 		JMenu configMenu = new JMenu("Configure");
 		configMenu.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		menuBar.add(configMenu);
 		
+		//calculation submenu
 		JMenu CalculationSubmenu = new JMenu("Calculation Method");
 		CalculationSubmenu.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		configMenu.add(CalculationSubmenu);
 		
-		//JMenuItem CalculationOption1 = new JMenuItem("Behave like Microsoft Windows calculator");
-		//CalculationOption1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		//CalculationSubmenu.add(CalculationOption1);
-		//CalculationOption1.setIcon(new ImageIcon(getClass().getResource("/Calculator/src/img/windows.gif")));
-		JMenuItem CalculationOption1 = new JMenuItem("Behave like Microsoft Windows calculator", new ImageIcon("/Calculator/src/img/windows.gif"));
+		JRadioButtonMenuItem CalculationOption1 = new JRadioButtonMenuItem("Behave like Microsoft Windows calculator", new ImageIcon(CalcWindow.class.getResource("/img/windows.png")));
 		CalculationOption1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		CalculationSubmenu.add(CalculationOption1);
 		CalculationOption1.addActionListener(new ActionListener() {
@@ -99,9 +100,10 @@ public class CalcWindow {
 				calculationMethod = 1;
 			}
 		});
+		CalculationOption1.setSelected(true);
 		
-		
-		JMenuItem CalculationOption2 = new JMenuItem("Show answer after each button clicked");
+		JRadioButtonMenuItem CalculationOption2 = new JRadioButtonMenuItem("Show answer after each button clicked");
+		CalculationOption2.setIcon(new ImageIcon(CalcWindow.class.getResource("/img/afterEveryButton.png")));
 		CalculationOption2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		CalculationSubmenu.add(CalculationOption2);
 		CalculationOption2.addActionListener(new ActionListener() {
@@ -110,7 +112,8 @@ public class CalcWindow {
 			}
 		});
 		
-		JMenuItem CalculationOption3 = new JMenuItem("Show answer after each operator clicked");
+		JRadioButtonMenuItem CalculationOption3 = new JRadioButtonMenuItem("Show answer after each operator clicked");
+		CalculationOption3.setIcon(new ImageIcon(CalcWindow.class.getResource("/img/afterOperatorsOnly.png")));
 		CalculationOption3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		CalculationSubmenu.add(CalculationOption3);
 		CalculationOption3.addActionListener(new ActionListener() {
@@ -119,15 +122,122 @@ public class CalcWindow {
 			}
 		});
 		
+		ButtonGroup CalculationGroup = new ButtonGroup();
+		CalculationGroup.add(CalculationOption1);
+		CalculationGroup.add(CalculationOption2);
+		CalculationGroup.add(CalculationOption3);
 		
-		//JMenuItem configDecimals = new JMenuItem("Decimal Precision");
-		//configDecimals.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		//configMenu.add(configDecimals);
-		//configDecimals.addActionListener(new ActionListener() {
-		//	public void actionPerformed(ActionEvent e) {
-		//		MenuCalculationWindow menuCalculatorWindow = new MenuCalculationWindow();
-		//	}
-		//});
+		
+		//decimals submenu
+		JMenu DecimalsSubmenu = new JMenu("Decimal Precision");
+		DecimalsSubmenu.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		configMenu.add(DecimalsSubmenu);
+		
+		//decmals sub-submenu #1
+		JMenu DecimalsSubmenu1 = new JMenu("Precision");
+		DecimalsSubmenu1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		DecimalsSubmenu.add(DecimalsSubmenu1);
+		
+		JRadioButtonMenuItem DecimalsSubmenu1Option1 = new JRadioButtonMenuItem("0");
+		DecimalsSubmenu1Option1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		DecimalsSubmenu1.add(DecimalsSubmenu1Option1);
+		DecimalsSubmenu1Option1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//
+			}
+		});
+		
+		JRadioButtonMenuItem DecimalsSubmenu1Option2 = new JRadioButtonMenuItem("1");
+		DecimalsSubmenu1Option2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		DecimalsSubmenu1.add(DecimalsSubmenu1Option2);
+		DecimalsSubmenu1Option2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//
+			}
+		});
+		
+		JRadioButtonMenuItem DecimalsSubmenu1Option3 = new JRadioButtonMenuItem("2");
+		DecimalsSubmenu1Option3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		DecimalsSubmenu1.add(DecimalsSubmenu1Option3);
+		DecimalsSubmenu1Option3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//
+			}
+		});
+		
+		JRadioButtonMenuItem DecimalsSubmenu1Option4 = new JRadioButtonMenuItem("3");
+		DecimalsSubmenu1Option4.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		DecimalsSubmenu1.add(DecimalsSubmenu1Option4);
+		DecimalsSubmenu1Option4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//
+			}
+		});
+		
+		JRadioButtonMenuItem DecimalsSubmenu1Option5 = new JRadioButtonMenuItem("4");
+		DecimalsSubmenu1Option5.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		DecimalsSubmenu1.add(DecimalsSubmenu1Option5);
+		DecimalsSubmenu1Option5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//
+			}
+		});
+		DecimalsSubmenu1Option5.setSelected(true);
+		
+		JRadioButtonMenuItem DecimalsSubmenu1Option6 = new JRadioButtonMenuItem("8");
+		DecimalsSubmenu1Option6.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		DecimalsSubmenu1.add(DecimalsSubmenu1Option6);
+		DecimalsSubmenu1Option6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//
+			}
+		});
+		
+		JRadioButtonMenuItem DecimalsSubmenu1Option7 = new JRadioButtonMenuItem("Custom");
+		DecimalsSubmenu1Option7.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		DecimalsSubmenu1.add(DecimalsSubmenu1Option7);
+		DecimalsSubmenu1Option7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//
+			}
+		});
+		
+		ButtonGroup DecimalsSubmenu1Group = new ButtonGroup();
+		DecimalsSubmenu1Group.add(DecimalsSubmenu1Option1);
+		DecimalsSubmenu1Group.add(DecimalsSubmenu1Option2);
+		DecimalsSubmenu1Group.add(DecimalsSubmenu1Option3);
+		DecimalsSubmenu1Group.add(DecimalsSubmenu1Option4);
+		DecimalsSubmenu1Group.add(DecimalsSubmenu1Option5);
+		DecimalsSubmenu1Group.add(DecimalsSubmenu1Option6);
+				
+		//decmals sub-submenu #2
+		JMenu DecimalsSubmenu2 = new JMenu("Method");
+		DecimalsSubmenu2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		DecimalsSubmenu.add(DecimalsSubmenu2);
+		
+		JRadioButtonMenuItem DecimalsSubmenu2Option1 = new JRadioButtonMenuItem("Decimal Places");
+		DecimalsSubmenu2Option1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		DecimalsSubmenu2.add(DecimalsSubmenu2Option1);
+		DecimalsSubmenu2Option1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//
+			}
+		});
+		DecimalsSubmenu2Option1.setSelected(true);
+		
+		JRadioButtonMenuItem DecimalsSubmenu2Option2 = new JRadioButtonMenuItem("Significant Figures");
+		DecimalsSubmenu2Option2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		DecimalsSubmenu2.add(DecimalsSubmenu2Option2);
+		DecimalsSubmenu2Option2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//
+			}
+		});
+		
+		ButtonGroup DecimalsSubmenu2Group = new ButtonGroup();
+		DecimalsSubmenu2Group.add(DecimalsSubmenu2Option1);
+		DecimalsSubmenu2Group.add(DecimalsSubmenu2Option2);
+		
 		
 		
 		
