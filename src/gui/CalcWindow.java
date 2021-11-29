@@ -1,6 +1,7 @@
 package gui;
 
 import com.fathzer.soft.javaluator.DoubleEvaluator;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -30,11 +31,12 @@ public class CalcWindow {
 	private Dimension DEFAULT_LABEL_SIZE = new Dimension(64, 0);
 	private Dimension DEFAULT_BUTTON_SIZE = new Dimension(64, 32);
 	private Boolean is_shift = false;
+	JButton btn_equals = new JButton("=");
 	private Integer calculationMethod = 1;
 	private String working_expr = "";
 	private DoubleEvaluator evaluator = new DoubleEvaluator();
 	private Double answer;
-	private JTextField screen_options;
+	private JTextField screen_option;
 
 
 	/**
@@ -95,9 +97,9 @@ public class CalcWindow {
 		CalculationSubmenu.add(CalculationOption1);
 		CalculationOption1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
 				calculationMethod = 1;
-				//this file
+				btn_equals.setEnabled(true);
+				btn_equals.setBackground(new Color(153, 204, 255));
 			}
 		});
 		CalculationOption1.setSelected(true);
@@ -109,8 +111,10 @@ public class CalcWindow {
 		CalculationOption2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				calculationMethod = 2;
-				//expressions_v1 file
-				//todo: DISABLE THE "=" BUTTON
+				//disable the "=" button because the answer will always be automatically calculated in this mode
+				btn_equals.setEnabled(false);
+				btn_equals.setBackground(Color.LIGHT_GRAY);
+				//btn_equals.setVisible(false);
 			}
 		});
 		
@@ -121,6 +125,8 @@ public class CalcWindow {
 		CalculationOption3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				calculationMethod = 3;
+				btn_equals.setEnabled(true);
+				btn_equals.setBackground(new Color(153, 204, 255));
 			}
 		});
 		
@@ -269,11 +275,11 @@ public class CalcWindow {
 		panel_screen.add(screen_answer);
 		screen_answer.setColumns(10);
 		
-		screen_options = new JTextField();
-		screen_options.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		screen_options.setEditable(false);
-		panel_screen.add(screen_options);
-		screen_options.setColumns(10);
+		screen_option = new JTextField();
+		screen_option.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		screen_option.setEditable(false);
+		panel_screen.add(screen_option);
+		screen_option.setColumns(10);
 				
 		//================ LEVEL 2 ================ Parent: frame
 		//panel to hold buttons and labels for the calculator
@@ -326,12 +332,12 @@ public class CalcWindow {
 			public void actionPerformed(ActionEvent e) {
 				if (! is_shift) {
 					is_shift = true;
-					screen_options.setText("SHIFT: ON");
+					screen_option.setText("SHIFT: ON");
 				}
 				else {
 					is_shift = false;
 					// remove the text saying that Shift is on
-					screen_options.setText("");
+					screen_option.setText("");
 				}
 			}
 		});
@@ -381,7 +387,6 @@ public class CalcWindow {
 		panel_buttons2.add(btn_7);
 		btn_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO: button action listeners are here
 				doButtonClick(btn_7.getText(), false);
 				//addToWorkingExpression(btn_7.getText());
 			}
@@ -430,7 +435,7 @@ public class CalcWindow {
 				else {
 					System.out.println("[ CE ]");
 					is_shift = false;
-					screen_options.setText("");
+					screen_option.setText("");
 				}
 			}
 		});
@@ -595,10 +600,9 @@ public class CalcWindow {
 		btnNewButton_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_buttons5.add(btnNewButton_8);
 		
-		JButton btn_equals = new JButton("=");
 		btn_equals.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons5.add(btn_equals);
 		btn_equals.setBackground(new Color(153, 204, 255));
+		panel_buttons5.add(btn_equals);
 		btn_equals.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
 				// (http://javaluator.sourceforge.net/en/doc/tutorial.php)
@@ -723,34 +727,15 @@ public class CalcWindow {
 		else if (calculationMethod == 2) {
 			displayCurrentAnswer(btnText, isOperator);
 			
-			//if last char was a number, add "=" to the working expression for clarity
+			//if last char was a number, add "=" to the expression on the screen for clarity
 			if (! isOperator) {
-				
-				screen_working_expr.setText(working_expr + "="); //this does not affect working_expr, only the screen //, so this change is temporary
+				//this does not affect working_expr, only the screen, so this change is temporary
+				screen_working_expr.setText(working_expr + "=");
 			}
-			
-			//because of the last line, if last char was an operator, 
-			//  we must remove any potential "=" in the working expression before displaying current answer
-			//else if (isOperator) {
-			//	System.out.println(working_expr);
-			//	String working_expr_last_char = working_expr.substring(working_expr.length() - 1);
-			//	//System.out.println("working_expr_last_char: " + working_expr_last_char);
-			//	assert(working_expr_last_char == "=");
-			//	if (working_expr_last_char == "=") {
-			//		System.out.println("!");
-			//		//TODO: FIX
-			//		String working_expr_excl_last_char = working_expr.substring(0, working_expr.length() - 1);
-			//		System.out.println("working_expr_excl_last_char: " + working_expr_excl_last_char);
-			//		working_expr = working_expr_excl_last_char += btnText;
-			//		screen_working_expr.setText(working_expr);
-			//		
-			//	}
-			//	displayCurrentAnswer(btnText, isOperator);
-			//}
 		}
 		
 		//behave like Windows calculator
-		//TODO
+		//TODO (based on the comments under the button action listeners in this file?)
 		else {
 			//
 		}
