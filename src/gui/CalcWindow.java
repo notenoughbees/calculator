@@ -9,7 +9,6 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,7 +16,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
@@ -26,14 +24,14 @@ import javax.swing.SwingConstants;
 
 public class CalcWindow {
 	private JFrame frame;
-	private JTextField screen_working_expression;
+	private JTextField screen_working_expr;
 	private JTextField screen_answer;
 	private Integer DEFAULT_PADDING = 5;
 	private Dimension DEFAULT_LABEL_SIZE = new Dimension(64, 0);
 	private Dimension DEFAULT_BUTTON_SIZE = new Dimension(64, 32);
 	private Boolean is_shift = false;
 	private Integer calculationMethod = 1;
-	private String working_expression = "";
+	private String working_expr = "";
 	private DoubleEvaluator evaluator = new DoubleEvaluator();
 	private Double answer;
 	private JTextField screen_options;
@@ -97,7 +95,9 @@ public class CalcWindow {
 		CalculationSubmenu.add(CalculationOption1);
 		CalculationOption1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//TODO
 				calculationMethod = 1;
+				//this file
 			}
 		});
 		CalculationOption1.setSelected(true);
@@ -109,6 +109,8 @@ public class CalcWindow {
 		CalculationOption2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				calculationMethod = 2;
+				//expressions_v1 file
+				//todo: DISABLE THE "=" BUTTON
 			}
 		});
 		
@@ -254,11 +256,11 @@ public class CalcWindow {
 		panel_screen.setPreferredSize(new Dimension(340, 90));
 		
 		//================ LEVEL 3 ================ Parent: panel_screen
-		screen_working_expression = new JTextField();
-		screen_working_expression.setHorizontalAlignment(SwingConstants.LEFT);
-		screen_working_expression.setEditable(false);
-		screen_working_expression.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_screen.add(screen_working_expression);
+		screen_working_expr = new JTextField();
+		screen_working_expr.setHorizontalAlignment(SwingConstants.LEFT);
+		screen_working_expr.setEditable(false);
+		screen_working_expr.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_screen.add(screen_working_expr);
 		
 		screen_answer = new JTextField();
 		screen_answer.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -379,7 +381,9 @@ public class CalcWindow {
 		panel_buttons2.add(btn_7);
 		btn_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addBtnContentsToWorkingExpression(btn_7.getText());
+				//TODO: button action listeners are here
+				doButtonClick(btn_7.getText(), false);
+				//addToWorkingExpression(btn_7.getText());
 			}
 		});
 		
@@ -389,7 +393,8 @@ public class CalcWindow {
 		panel_buttons2.add(btn_8);
 		btn_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addBtnContentsToWorkingExpression(btn_8.getText());
+				doButtonClick(btn_8.getText(), false);
+				//addToWorkingExpression(btn_8.getText());
 			}
 		});
 		
@@ -399,7 +404,8 @@ public class CalcWindow {
 		panel_buttons2.add(btn_9);
 		btn_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addBtnContentsToWorkingExpression(btn_9.getText());
+				doButtonClick(btn_9.getText(), false);
+				//addToWorkingExpression(btn_9.getText());
 			}
 		});
 		
@@ -411,10 +417,10 @@ public class CalcWindow {
 				if (! is_shift) {
 					System.out.println("[ DEL ]");
 					try {
-						// remove the last char from working_expression
+						// remove the last char from working_expr
 						// (https://www.javatpoint.com/how-to-remove-last-character-from-string-in-java)
-						screen_working_expression.setText(working_expression.substring(0, working_expression.length()-1));
-						working_expression = screen_working_expression.getText();
+						screen_working_expr.setText(working_expr.substring(0, working_expr.length()-1));
+						working_expr = screen_working_expr.getText();
 						}
 					//if DEL is pressed when there is nothing to delete:
 					catch(StringIndexOutOfBoundsException e1)
@@ -434,8 +440,8 @@ public class CalcWindow {
 		JButton btn_ca = new JButton("CA");
 		btn_ca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expression = "";
-				screen_working_expression.setText("");
+				working_expr = "";
+				screen_working_expr.setText("");
 				screen_answer.setText("");
 			}
 		});
@@ -451,7 +457,8 @@ public class CalcWindow {
 		panel_buttons3.add(btn_4);
 		btn_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addBtnContentsToWorkingExpression(btn_4.getText());
+				doButtonClick(btn_4.getText(), false);
+				//addToWorkingExpression(btn_4.getText());
 			}
 		});
 		
@@ -461,7 +468,8 @@ public class CalcWindow {
 		panel_buttons3.add(btn_5);
 		btn_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addBtnContentsToWorkingExpression(btn_5.getText());
+				doButtonClick(btn_5.getText(), false);
+				//addToWorkingExpression(btn_5.getText());
 			}
 		});
 		
@@ -471,7 +479,8 @@ public class CalcWindow {
 		panel_buttons3.add(btn_6);
 		btn_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addBtnContentsToWorkingExpression(btn_6.getText());
+				doButtonClick(btn_6.getText(), false);
+				//addToWorkingExpression(btn_6.getText());
 			}
 		});
 		
@@ -481,7 +490,8 @@ public class CalcWindow {
 		panel_buttons3.add(btn_multiply);
 		btn_multiply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				displayCurrentAnswer(btn_multiply.getText());
+				doButtonClick(btn_multiply.getText(), true);
+				//displayCurrentAnswer(btn_multiply.getText());
 			}
 		});
 		
@@ -491,7 +501,8 @@ public class CalcWindow {
 		panel_buttons3.add(btn_divide);
 		btn_divide.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				displayCurrentAnswer(btn_divide.getText());
+				doButtonClick(btn_divide.getText(), true);
+				//displayCurrentAnswer(btn_divide.getText());
 			}
 		});
 		
@@ -502,7 +513,8 @@ public class CalcWindow {
 		panel_buttons4.add(btn_1);
 		btn_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addBtnContentsToWorkingExpression(btn_1.getText());
+				doButtonClick(btn_1.getText(), false);
+				//addToWorkingExpression(btn_1.getText());
 			}
 		});
 		
@@ -512,7 +524,8 @@ public class CalcWindow {
 		panel_buttons4.add(btn_2);
 		btn_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addBtnContentsToWorkingExpression(btn_2.getText());
+				doButtonClick(btn_2.getText(), false);
+				//addToWorkingExpression(btn_2.getText());
 			}
 		});
 		
@@ -522,7 +535,8 @@ public class CalcWindow {
 		panel_buttons4.add(btn_3);
 		btn_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addBtnContentsToWorkingExpression(btn_3.getText());
+				doButtonClick(btn_3.getText(), false);
+				//addToWorkingExpression(btn_3.getText());
 			}
 		});
 		
@@ -532,7 +546,8 @@ public class CalcWindow {
 		panel_buttons4.add(btn_plus);
 		btn_plus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				displayCurrentAnswer(btn_plus.getText());
+				doButtonClick(btn_plus.getText(), true);
+				//displayCurrentAnswer(btn_plus.getText());
 			}
 		});
 		
@@ -542,7 +557,8 @@ public class CalcWindow {
 		panel_buttons4.add(btn_minus);
 		btn_minus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				displayCurrentAnswer(btn_minus.getText());
+				doButtonClick(btn_minus.getText(), true);
+				//displayCurrentAnswer(btn_minus.getText());
 			}
 		});
 		
@@ -553,7 +569,8 @@ public class CalcWindow {
 		panel_buttons5.add(btn_0);
 		btn_0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addBtnContentsToWorkingExpression(btn_0.getText());
+				doButtonClick(btn_0.getText(), false);
+				//addToWorkingExpression(btn_0.getText());
 			}
 		});
 		
@@ -563,7 +580,8 @@ public class CalcWindow {
 		panel_buttons5.add(btn_decimal);
 		btn_decimal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addBtnContentsToWorkingExpression(btn_decimal.getText());
+				doButtonClick(btn_decimal.getText(), false);
+				//addToWorkingExpression(btn_decimal.getText());
 			}
 		});
 		
@@ -599,9 +617,9 @@ public class CalcWindow {
 				 * - https://stackoverflow.com/q/2824515/8042538	<--
 				 */
 			    
-			    // Evaluate the working_expression
+			    // Evaluate the working_expr
 			    try {
-			    	evaluateExpression(working_expression);
+			    	evaluateExpression(working_expr);
 			    	
 			    }
 			    // if "=" is pressed before anything else, then don't display anything on screen_answer
@@ -610,15 +628,15 @@ public class CalcWindow {
 			    
 			    // add the "=" to the working expression (unless there is already an "=" there), and display
 			    try {
-			    	String working_expression_last_char = working_expression.substring(working_expression.length()-1);
-			    	System.out.println(working_expression_last_char);
-				    if(working_expression_last_char != "=")
+			    	String working_expr_last_char = working_expr.substring(working_expr.length()-1);
+			    	System.out.println(working_expr_last_char);
+				    if(working_expr_last_char != "=")
 				    	{
-				    	working_expression += btn_equals.getText();
-					    screen_working_expression.setText(working_expression);
+				    	working_expr += btn_equals.getText();
+					    screen_working_expr.setText(working_expr);
 				    	}
 			   		}
-			    // if "=" is pressed before anything else, then don't display anything on screen_working_expression
+			    // if "=" is pressed before anything else, then don't display anything on screen_working_expr
 			    catch(StringIndexOutOfBoundsException e1) {
 			    	}
 			    
@@ -631,9 +649,10 @@ public class CalcWindow {
 	 * The standard action for a button: add the text shown on that button to the current expression.
 	 * @param btnText
 	 */
-	private void addBtnContentsToWorkingExpression(String btnText) {
-		working_expression += btnText;
-		screen_working_expression.setText(working_expression);
+	private void addToWorkingExpression(String btnText) {
+		//System.out.println("addToWorkingExpression RUN");
+		working_expr += btnText;
+		screen_working_expr.setText(working_expr);
 	}
 	
 	/**
@@ -650,14 +669,100 @@ public class CalcWindow {
 	
 	
 	/**
-	 * Calculate the current working_expression and display the output to the answer screen.
+	 * Calculate the current working_expr and display the output to the answer screen.
 	 * This method is called when an operator is clicked.
 	 * @param btnText
 	 */
-	private void displayCurrentAnswer(String btnText) {
-		addBtnContentsToWorkingExpression(btnText);
-		String working_expression_except_last_char = working_expression.substring(0, working_expression.length()-1);
-		evaluateExpression(working_expression_except_last_char);
+	private void displayCurrentAnswer(String btnText, Boolean isOperator) {
+		if (! isOperator) {
+			addToWorkingExpression(btnText);
+			evaluateExpression(working_expr);
+			//screen_answer.setText(working_expr); //this is included in evaluateExpression ^
+		}
+		else {
+			//if the last char was an operator, thn we need to take it off the expression before evaluating
+			addToWorkingExpression(btnText);
+			String working_expr_except_last_char = working_expr.substring(0, working_expr.length()-1);
+			evaluateExpression(working_expr_except_last_char);
+		}
 	}
 
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	/**
+	 * The method called by the ActionListener of all number buttons and operator buttons.
+	 * @param btnText
+	 * @param isOperator: Whether the button clicked was an operator
+	 */
+	private void doButtonClick(String btnText, Boolean isOperator) {
+		//update the working expression after every operator clicked
+		//TODO
+		if (calculationMethod == 3) {
+			if (isOperator) {
+				displayCurrentAnswer(btnText, isOperator);
+			}
+			
+			else {
+				addToWorkingExpression(btnText);
+				//if this is the first number in the expression, display it anyway for convenience
+				//if 
+			}
+		}
+		
+		//update the working expression after every button clicked
+		else if (calculationMethod == 2) {
+			displayCurrentAnswer(btnText, isOperator);
+			
+			//if last char was a number, add "=" to the working expression for clarity
+			if (! isOperator) {
+				
+				screen_working_expr.setText(working_expr + "="); //this does not affect working_expr, only the screen //, so this change is temporary
+			}
+			
+			//because of the last line, if last char was an operator, 
+			//  we must remove any potential "=" in the working expression before displaying current answer
+			//else if (isOperator) {
+			//	System.out.println(working_expr);
+			//	String working_expr_last_char = working_expr.substring(working_expr.length() - 1);
+			//	//System.out.println("working_expr_last_char: " + working_expr_last_char);
+			//	assert(working_expr_last_char == "=");
+			//	if (working_expr_last_char == "=") {
+			//		System.out.println("!");
+			//		//TODO: FIX
+			//		String working_expr_excl_last_char = working_expr.substring(0, working_expr.length() - 1);
+			//		System.out.println("working_expr_excl_last_char: " + working_expr_excl_last_char);
+			//		working_expr = working_expr_excl_last_char += btnText;
+			//		screen_working_expr.setText(working_expr);
+			//		
+			//	}
+			//	displayCurrentAnswer(btnText, isOperator);
+			//}
+		}
+		
+		//behave like Windows calculator
+		//TODO
+		else {
+			//
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
