@@ -1,7 +1,6 @@
 package gui;
 
 import com.fathzer.soft.javaluator.DoubleEvaluator;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -10,6 +9,10 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,10 +24,15 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
 
 
 public class CalcWindow {
+	public Point mousePos;
 	private JFrame frame;
+	public static Integer decimalPrecision = 4;
 	private JTextField screen_working_expr;
 	private JTextField screen_answer;
 	private Integer DEFAULT_PADDING = 5;
@@ -70,6 +78,10 @@ public class CalcWindow {
 		//frame for window
 		frame = new JFrame();
 		frame.setBounds(100, 100, 360, 400);
+		//TODO
+		//frame.setIconImage(new Image(CalcWindow.class.getResource("/img/calculatorIcon.png")));
+		Image icon = Toolkit.getDefaultToolkit().getImage("/img/calculatorIcon.png");    
+		frame.setIconImage(icon);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new FlowLayout());
 		
@@ -92,7 +104,11 @@ public class CalcWindow {
 		CalculationSubmenu.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		configMenu.add(CalculationSubmenu);
 		
-		JRadioButtonMenuItem CalculationOption1 = new JRadioButtonMenuItem("Behave like Microsoft Windows calculator", new ImageIcon(CalcWindow.class.getResource("/img/windows.png")));
+		JRadioButtonMenuItem CalculationOption1 = new JRadioButtonMenuItem(
+				"Behave like Microsoft Windows calculator", 
+				new ImageIcon(CalcWindow.class.getResource("/img/windows.png")));
+		// (https://www.demo2s.com/java/java-swing-menu-items-mnemonics-and-accelerators.html)
+		CalculationOption1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
 		CalculationOption1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		CalculationSubmenu.add(CalculationOption1);
 		CalculationOption1.addActionListener(new ActionListener() {
@@ -104,10 +120,13 @@ public class CalcWindow {
 		});
 		CalculationOption1.setSelected(true);
 		
-		JRadioButtonMenuItem CalculationOption2 = new JRadioButtonMenuItem("Show answer after each button clicked");
-		CalculationOption2.setIcon(new ImageIcon(CalcWindow.class.getResource("/img/afterEveryButton.png")));
+		JRadioButtonMenuItem CalculationOption2 = new JRadioButtonMenuItem(
+				"Show answer after any button clicked", 
+				new ImageIcon(CalcWindow.class.getResource("/img/afterEveryButton.png")));
+		CalculationOption2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK));
 		CalculationOption2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		CalculationSubmenu.add(CalculationOption2);
+		CalculationOption2.setToolTipText("The answer automatically updates after every button press");
 		CalculationOption2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				calculationMethod = 2;
@@ -118,10 +137,13 @@ public class CalcWindow {
 			}
 		});
 		
-		JRadioButtonMenuItem CalculationOption3 = new JRadioButtonMenuItem("Show answer after each operator clicked");
-		CalculationOption3.setIcon(new ImageIcon(CalcWindow.class.getResource("/img/afterOperatorsOnly.png")));
+		JRadioButtonMenuItem CalculationOption3 = new JRadioButtonMenuItem(
+				"Show answer after each operator clicked", 
+				new ImageIcon(CalcWindow.class.getResource("/img/afterOperatorsOnly.png")));
+		CalculationOption3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK));
 		CalculationOption3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		CalculationSubmenu.add(CalculationOption3);
+		CalculationOption3.setToolTipText("Calculates the expression so far every time an operator is clicked");
 		CalculationOption3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				calculationMethod = 3;
@@ -147,66 +169,74 @@ public class CalcWindow {
 		DecimalsSubmenu.add(DecimalsSubmenu1);
 		
 		JRadioButtonMenuItem DecimalsSubmenu1Option1 = new JRadioButtonMenuItem("0");
+		DecimalsSubmenu1Option1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0, InputEvent.CTRL_DOWN_MASK));
 		DecimalsSubmenu1Option1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		DecimalsSubmenu1.add(DecimalsSubmenu1Option1);
 		DecimalsSubmenu1Option1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//
+				decimalPrecision = 0;
 			}
 		});
 		
 		JRadioButtonMenuItem DecimalsSubmenu1Option2 = new JRadioButtonMenuItem("1");
+		DecimalsSubmenu1Option2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.CTRL_DOWN_MASK));
 		DecimalsSubmenu1Option2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		DecimalsSubmenu1.add(DecimalsSubmenu1Option2);
 		DecimalsSubmenu1Option2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//
+				decimalPrecision = 1;
 			}
 		});
 		
 		JRadioButtonMenuItem DecimalsSubmenu1Option3 = new JRadioButtonMenuItem("2");
+		DecimalsSubmenu1Option3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.CTRL_DOWN_MASK));
 		DecimalsSubmenu1Option3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		DecimalsSubmenu1.add(DecimalsSubmenu1Option3);
 		DecimalsSubmenu1Option3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//
+				decimalPrecision = 2;
 			}
 		});
 		
 		JRadioButtonMenuItem DecimalsSubmenu1Option4 = new JRadioButtonMenuItem("3");
+		DecimalsSubmenu1Option4.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.CTRL_DOWN_MASK));
 		DecimalsSubmenu1Option4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		DecimalsSubmenu1.add(DecimalsSubmenu1Option4);
 		DecimalsSubmenu1Option4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//
+				decimalPrecision = 3;
 			}
 		});
 		
 		JRadioButtonMenuItem DecimalsSubmenu1Option5 = new JRadioButtonMenuItem("4");
+		DecimalsSubmenu1Option5.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, InputEvent.CTRL_DOWN_MASK));
 		DecimalsSubmenu1Option5.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		DecimalsSubmenu1.add(DecimalsSubmenu1Option5);
 		DecimalsSubmenu1Option5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//
+				decimalPrecision = 4;
 			}
 		});
 		DecimalsSubmenu1Option5.setSelected(true);
 		
 		JRadioButtonMenuItem DecimalsSubmenu1Option6 = new JRadioButtonMenuItem("8");
+		DecimalsSubmenu1Option6.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_8, InputEvent.CTRL_DOWN_MASK));
 		DecimalsSubmenu1Option6.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		DecimalsSubmenu1.add(DecimalsSubmenu1Option6);
 		DecimalsSubmenu1Option6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//
+				decimalPrecision = 8;
 			}
 		});
 		
 		JRadioButtonMenuItem DecimalsSubmenu1Option7 = new JRadioButtonMenuItem("Custom");
+		DecimalsSubmenu1Option7.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
 		DecimalsSubmenu1Option7.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		DecimalsSubmenu1.add(DecimalsSubmenu1Option7);
 		DecimalsSubmenu1Option7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//
+				@SuppressWarnings("unused")
+				MenuCustomWindow customWin = new MenuCustomWindow();
 			}
 		});
 		
@@ -224,8 +254,11 @@ public class CalcWindow {
 		DecimalsSubmenu.add(DecimalsSubmenu2);
 		
 		JRadioButtonMenuItem DecimalsSubmenu2Option1 = new JRadioButtonMenuItem("Decimal Places");
+		DecimalsSubmenu2Option1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_DOWN_MASK));
 		DecimalsSubmenu2Option1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		DecimalsSubmenu2.add(DecimalsSubmenu2Option1);
+		DecimalsSubmenu2Option1.setToolTipText(
+				"For example, 10.456 rounded to 2 decimal places will show as 10.45.");
 		DecimalsSubmenu2Option1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//
@@ -234,8 +267,11 @@ public class CalcWindow {
 		DecimalsSubmenu2Option1.setSelected(true);
 		
 		JRadioButtonMenuItem DecimalsSubmenu2Option2 = new JRadioButtonMenuItem("Significant Figures");
+		DecimalsSubmenu2Option2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
 		DecimalsSubmenu2Option2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		DecimalsSubmenu2.add(DecimalsSubmenu2Option2);
+		DecimalsSubmenu2Option2.setToolTipText(
+				"For example, 10.456 rounded to 2 significant figures will show as 10.46.");
 		DecimalsSubmenu2Option2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//
@@ -375,6 +411,8 @@ public class CalcWindow {
 		panel_labels1.add(lbl_9);
 		
 		JLabel lbl_del = new JLabel("CE");
+		lbl_del.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lbl_del.setForeground(new Color(184, 134, 11));
 		panel_labels1.add(lbl_del);
 		
 		JLabel lbl_ca = new JLabel("");
@@ -605,6 +643,7 @@ public class CalcWindow {
 		panel_buttons5.add(btn_equals);
 		btn_equals.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
+				System.out.println(decimalPrecision);
 				// (http://javaluator.sourceforge.net/en/doc/tutorial.php)
 				
 				/*
@@ -633,7 +672,6 @@ public class CalcWindow {
 			    // add the "=" to the working expression (unless there is already an "=" there), and display
 			    try {
 			    	String working_expr_last_char = working_expr.substring(working_expr.length()-1);
-			    	System.out.println(working_expr_last_char);
 				    if(working_expr_last_char != "=")
 				    	{
 				    	working_expr += btn_equals.getText();
@@ -743,11 +781,8 @@ public class CalcWindow {
 	}
 	
 	
-	
-	
-	
-	
-	
+	public static void setDecimalPrecision(Integer newDecimalPrecison) 
+		{decimalPrecision = newDecimalPrecison;}
 	
 	
 }
