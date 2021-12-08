@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.Action;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -13,6 +15,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
 
 
 public class MenuCustomWindow {
@@ -48,21 +51,6 @@ public class MenuCustomWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				//TODO: keylistener: listen for specific key
-				
-				//int keyPressed = e.getKeyCode();
-				//if (keyPressed == KeyEvent.VK_ESCAPE) {
-				
-				//int id = e.getID();
-				//if (id == KeyEvent.VK_ESCAPE) {
-					
-				if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
-					closeWindow();
-				}
-			}
-		});
 		frame.setTitle("Custom Precision");
 		frame.setResizable(false);
 		//open the window near the position of the mouse

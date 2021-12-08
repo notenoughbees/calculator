@@ -26,6 +26,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.awt.event.InputEvent;
 
 
@@ -704,8 +706,15 @@ public class CalcWindow {
 	private void evaluateExpression(String expression) {
 		answer = evaluator.evaluate(expression);
     	// Output the result to screen_answer
-	    //   The answer must first be converted from double to string
-	    String output = String.valueOf(answer); // (https://stackoverflow.com/a/15530411/8042538)
+		//   Round the answer to the decimal precision defined in the menu settings
+		
+		BigDecimal answer_for_calculations = new BigDecimal(answer);
+		answer_for_calculations = answer_for_calculations.setScale(decimalPrecision, RoundingMode.HALF_UP);
+	
+		BigDecimal answer_rounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.HALF_UP);
+		
+	    //   Convert the answer from double to string
+	    String output = String.valueOf(answer_rounded); // (https://stackoverflow.com/a/15530411/8042538)
 	    screen_answer.setText(output);
 	}
 	
@@ -722,7 +731,7 @@ public class CalcWindow {
 			//screen_answer.setText(working_expr); //this is included in evaluateExpression ^
 		}
 		else {
-			//if the last char was an operator, thn we need to take it off the expression before evaluating
+			//if the last char was an operator, then we need to take it off the expression before evaluating
 			addToWorkingExpression(btnText);
 			String working_expr_except_last_char = working_expr.substring(0, working_expr.length()-1);
 			evaluateExpression(working_expr_except_last_char);
