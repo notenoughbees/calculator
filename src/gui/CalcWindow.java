@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.awt.event.InputEvent;
 
@@ -35,6 +36,7 @@ public class CalcWindow {
 	public Point mousePos;
 	private JFrame frame;
 	public static Integer decimalPrecision = 4;
+	public static String roundingMethod = "D";
 	private JTextField screen_working_expr;
 	private JTextField screen_answer;
 	private Integer DEFAULT_PADDING = 5;
@@ -260,10 +262,10 @@ public class CalcWindow {
 		DecimalsSubmenu2Option1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		DecimalsSubmenu2.add(DecimalsSubmenu2Option1);
 		DecimalsSubmenu2Option1.setToolTipText(
-				"For example, 10.456 rounded to 2 decimal places will show as 10.45.");
+				"For example, 10.456 rounded to 2 decimal places will show as 10.46.");
 		DecimalsSubmenu2Option1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//
+				roundingMethod = "D";
 			}
 		});
 		DecimalsSubmenu2Option1.setSelected(true);
@@ -273,10 +275,10 @@ public class CalcWindow {
 		DecimalsSubmenu2Option2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		DecimalsSubmenu2.add(DecimalsSubmenu2Option2);
 		DecimalsSubmenu2Option2.setToolTipText(
-				"For example, 10.456 rounded to 2 significant figures will show as 10.46.");
+				"For example, 10.456 rounded to 2 significant figures will show as 10.45.");
 		DecimalsSubmenu2Option2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//
+				roundingMethod = "S";
 			}
 		});
 		
@@ -664,7 +666,7 @@ public class CalcWindow {
 			    
 			    // Evaluate the working_expr
 			    try {
-			    	evaluateExpression(working_expr);
+			    	screen_answer.setText(evaluateExpression(working_expr));
 			    	
 			    }
 			    // if "=" is pressed before anything else, then don't display anything on screen_answer
@@ -699,23 +701,53 @@ public class CalcWindow {
 		screen_working_expr.setText(working_expr);
 	}
 	
+	
 	/**
 	 * 
 	 * @param expression
 	 */
-	private void evaluateExpression(String expression) {
+	public String evaluateExpression(String expression) {
 		answer = evaluator.evaluate(expression);
     	// Output the result to screen_answer
 		//   Round the answer to the decimal precision defined in the menu settings
+		BigDecimal answer_rounded = null;
+		if (roundingMethod == "S")
+		{
+			//TODO: round to significant figures
+			//TODO: DO THIS MANUALLY USING SIG FIG RULES: MAKE A SIG FIG METHOD! (https://www.my-gcsescience.com/decimal-places-significant-figures/)
+			BigDecimal answer_bd = new BigDecimal(answer);
+			answer_rounded = answer_bd.round(new MathContext(decimalPrecision));
+			
+			
+			
+			
+			//String[] answer_split = String.valueOf(answer).split("\\.", 6);
+			//String answer_decimal_digits = answer_split[1];
+			//if we're trying to round to the same or less significant figures than there are decimal
+			// digits, cancel the rounding and just use the answer we already had.
+			//if (decimalPrecision <= answer_decimal_digits.length())
+			//{
+				//answer_rounded = new BigDecimal(answer);
+			//	answer_rounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.UP);
+			//}
+			//else
+			//{
+			//	answer_rounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.DOWN);
+			//}
+			
+		}
+		else
+		{
+			answer_rounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.HALF_UP);
+		}
 		
-		BigDecimal answer_for_calculations = new BigDecimal(answer);
-		answer_for_calculations = answer_for_calculations.setScale(decimalPrecision, RoundingMode.HALF_UP);
-	
-		BigDecimal answer_rounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.HALF_UP);
 		
 	    //   Convert the answer from double to string
+		//System.out.println("MAIN:");
+		//System.out.println(answer_rounded);
 	    String output = String.valueOf(answer_rounded); // (https://stackoverflow.com/a/15530411/8042538)
-	    screen_answer.setText(output);
+	    System.out.println(output);
+	    return output;
 	}
 	
 	
@@ -727,20 +759,17 @@ public class CalcWindow {
 	private void displayCurrentAnswer(String btnText, Boolean isOperator) {
 		if (! isOperator) {
 			addToWorkingExpression(btnText);
-			evaluateExpression(working_expr);
+			screen_answer.setText(evaluateExpression(working_expr));
 			//screen_answer.setText(working_expr); //this is included in evaluateExpression ^
 		}
 		else {
 			//if the last char was an operator, then we need to take it off the expression before evaluating
 			addToWorkingExpression(btnText);
 			String working_expr_except_last_char = working_expr.substring(0, working_expr.length()-1);
-			evaluateExpression(working_expr_except_last_char);
+			screen_answer.setText(evaluateExpression(working_expr_except_last_char));
 		}
 	}
 
-	
-	
-	
 	
 	
 	
@@ -790,8 +819,11 @@ public class CalcWindow {
 	}
 	
 	
+	
+	
 	public static void setDecimalPrecision(Integer newDecimalPrecison) 
 		{decimalPrecision = newDecimalPrecison;}
 	
-	
+	public static void setRoundingMethod(String newRoundingMethod) 
+		{roundingMethod = newRoundingMethod;}
 }
