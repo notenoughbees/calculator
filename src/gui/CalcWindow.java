@@ -1,10 +1,7 @@
 package gui;
 
-import com.fathzer.soft.javaluator.DoubleEvaluator;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -12,7 +9,14 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import javax.imageio.ImageIO;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,16 +27,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.KeyStroke;
-import java.awt.event.KeyEvent;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
-import java.awt.event.InputEvent;
+import javax.swing.SwingConstants;
+
+import com.fathzer.soft.javaluator.DoubleEvaluator;
 
 
 public class CalcWindow {
+	private Integer MAXIMUM_LENGTH = 20;
 	public Point mousePos;
 	private JFrame frame;
 	public static Integer decimalPrecision = 4;
@@ -710,44 +712,24 @@ public class CalcWindow {
 		answer = evaluator.evaluate(expression);
     	// Output the result to screen_answer
 		//   Round the answer to the decimal precision defined in the menu settings
-		BigDecimal answer_rounded = null;
+		String answer_string = null;
 		if (roundingMethod == "S")
+			//TODO: add more unit tests for numbers in article (cover all cases!!!)
 		{
-			//TODO: round to significant figures
-			//TODO: DO THIS MANUALLY USING SIG FIG RULES: MAKE A SIG FIG METHOD! (https://www.my-gcsescience.com/decimal-places-significant-figures/)
 			BigDecimal answer_bd = new BigDecimal(answer);
-			answer_rounded = answer_bd.round(new MathContext(decimalPrecision));
-			
-			
-			
-			
-			//String[] answer_split = String.valueOf(answer).split("\\.", 6);
-			//String answer_decimal_digits = answer_split[1];
-			//if we're trying to round to the same or less significant figures than there are decimal
-			// digits, cancel the rounding and just use the answer we already had.
-			//if (decimalPrecision <= answer_decimal_digits.length())
-			//{
-				//answer_rounded = new BigDecimal(answer);
-			//	answer_rounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.UP);
-			//}
-			//else
-			//{
-			//	answer_rounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.DOWN);
-			//}
-			
+			BigDecimal answer_rounded = answer_bd.round(new MathContext(decimalPrecision));
+			//in case answer_rounded is in scientific form, convert it to standard form
+			// (example: rounding 10.2 to 1sf: answer_rounded is 1E+1, answer_string is 10)
+			answer_string = answer_rounded.toPlainString(); // (https://stackoverflow.com/a/31294907/8042538)
+			//String output = String.valueOf(answer_string); //TODO: is this needed?
 		}
 		else
 		{
-			answer_rounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.HALF_UP);
+			BigDecimal answer_rounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.HALF_UP);
+			answer_string = String.valueOf(answer_rounded); // (https://stackoverflow.com/a/15530411/8042538)
 		}
-		
-		
-	    //   Convert the answer from double to string
-		//System.out.println("MAIN:");
-		//System.out.println(answer_rounded);
-	    String output = String.valueOf(answer_rounded); // (https://stackoverflow.com/a/15530411/8042538)
-	    System.out.println(output);
-	    return output;
+	    System.out.println(answer_string);
+	    return answer_string;
 	}
 	
 	
@@ -757,17 +739,47 @@ public class CalcWindow {
 	 * @param btnText
 	 */
 	private void displayCurrentAnswer(String btnText, Boolean isOperator) {
+		String text = "";
 		if (! isOperator) {
 			addToWorkingExpression(btnText);
-			screen_answer.setText(evaluateExpression(working_expr));
+			text = evaluateExpression(working_expr);
 			//screen_answer.setText(working_expr); //this is included in evaluateExpression ^
 		}
 		else {
 			//if the last char was an operator, then we need to take it off the expression before evaluating
 			addToWorkingExpression(btnText);
 			String working_expr_except_last_char = working_expr.substring(0, working_expr.length()-1);
-			screen_answer.setText(evaluateExpression(working_expr_except_last_char));
+			text = evaluateExpression(working_expr_except_last_char);
 		}
+		//convert to scientific notation if number is too long
+		//TODO: unit tests!!!
+		if (text.length() > MAXIMUM_LENGTH)
+		{
+			Integer coefficient = 0;
+			Double num = Double.valueOf(text);
+			Integer sign;
+			if (num < 10)
+			{
+				while (num < 10)
+				{
+					num = num * 10;
+					coefficient = coefficient + 1;
+				}
+				sign = -1;	
+			}
+			else
+			{
+				while (num < 10)
+				{
+					num = num / 10;
+					coefficient = coefficient + 1;
+				}
+				sign = 1;	
+			}
+			Integer firstDigit = (int) Math.floor(num);
+			text = coefficient + "E" + sign * firstDigit;
+		}
+		screen_answer.setText(text);
 	}
 
 	
