@@ -39,18 +39,19 @@ public class CalcWindow {
 	private JFrame frame;
 	public static Integer decimalPrecision = 4;
 	public static String roundingMethod = "D";
-	private JTextField screen_working_expr;
-	private JTextField screen_answer;
+	private JTextField workingExprScreen;
+	private JTextField answerScreen;
+	private JTextField optionsScreen;
 	private Integer DEFAULT_PADDING = 5;
 	private Dimension DEFAULT_LABEL_SIZE = new Dimension(64, 0);
 	private Dimension DEFAULT_BUTTON_SIZE = new Dimension(64, 32);
-	private Boolean is_shift = false;
-	JButton btn_equals = new JButton("=");
+	private Boolean isShift = false;
+	JButton btnEquals = new JButton("=");
 	private Integer calculationMethod = 1;
-	private String working_expr = "";
+	private String workingExpr = "";
 	private DoubleEvaluator evaluator = new DoubleEvaluator();
 	private Double answer;
-	private JTextField screen_option;
+
 
 
 	/**
@@ -93,12 +94,12 @@ public class CalcWindow {
 		
 		//================ LEVEL 2 ================ Parent: frame
 		//menu area
-		JPanel panel_menu = new JPanel();
-		frame.getContentPane().add(panel_menu);
+		JPanel menuPanel = new JPanel();
+		frame.getContentPane().add(menuPanel);
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		panel_menu.add(menuBar);
+		menuPanel.add(menuBar);
 		
 		//configuration menu
 		JMenu configMenu = new JMenu("Configure");
@@ -120,8 +121,8 @@ public class CalcWindow {
 		CalculationOption1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				calculationMethod = 1;
-				btn_equals.setEnabled(true);
-				btn_equals.setBackground(new Color(153, 204, 255));
+				btnEquals.setEnabled(true);
+				btnEquals.setBackground(new Color(153, 204, 255));
 			}
 		});
 		CalculationOption1.setSelected(true);
@@ -137,9 +138,9 @@ public class CalcWindow {
 			public void actionPerformed(ActionEvent e) {
 				calculationMethod = 2;
 				//disable the "=" button because the answer will always be automatically calculated in this mode
-				btn_equals.setEnabled(false);
-				btn_equals.setBackground(Color.LIGHT_GRAY);
-				//btn_equals.setVisible(false);
+				btnEquals.setEnabled(false);
+				btnEquals.setBackground(Color.LIGHT_GRAY);
+				//btnEquals.setVisible(false);
 			}
 		});
 		
@@ -153,8 +154,8 @@ public class CalcWindow {
 		CalculationOption3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				calculationMethod = 3;
-				btn_equals.setEnabled(true);
-				btn_equals.setBackground(new Color(153, 204, 255));
+				btnEquals.setEnabled(true);
+				btnEquals.setBackground(new Color(153, 204, 255));
 			}
 		});
 		
@@ -297,138 +298,138 @@ public class CalcWindow {
 		
 		
 		//top screen for calculator
-		JPanel panel_screen = new JPanel();
-		frame.getContentPane().add(panel_screen);
-		panel_screen.setLayout(new GridLayout(3, 1, 0, 0));
+		JPanel screenPanel = new JPanel();
+		frame.getContentPane().add(screenPanel);
+		screenPanel.setLayout(new GridLayout(3, 1, 0, 0));
 		
-		panel_screen.setPreferredSize(new Dimension(340, 90));
+		screenPanel.setPreferredSize(new Dimension(340, 90));
 		
-		//================ LEVEL 3 ================ Parent: panel_screen
-		screen_working_expr = new JTextField();
-		screen_working_expr.setHorizontalAlignment(SwingConstants.LEFT);
-		screen_working_expr.setEditable(false);
-		screen_working_expr.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_screen.add(screen_working_expr);
+		//================ LEVEL 3 ================ Parent: screenPanel
+		workingExprScreen = new JTextField();
+		workingExprScreen.setHorizontalAlignment(SwingConstants.LEFT);
+		workingExprScreen.setEditable(false);
+		workingExprScreen.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		screenPanel.add(workingExprScreen);
 		
-		screen_answer = new JTextField();
-		screen_answer.setHorizontalAlignment(SwingConstants.RIGHT);
-		screen_answer.setEditable(false);
-		screen_answer.setFont(new Font("Tahoma", Font.PLAIN, 32));
-		panel_screen.add(screen_answer);
-		screen_answer.setColumns(10);
+		answerScreen = new JTextField();
+		answerScreen.setHorizontalAlignment(SwingConstants.RIGHT);
+		answerScreen.setEditable(false);
+		answerScreen.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		screenPanel.add(answerScreen);
+		answerScreen.setColumns(10);
 		
-		screen_option = new JTextField();
-		screen_option.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		screen_option.setEditable(false);
-		panel_screen.add(screen_option);
-		screen_option.setColumns(10);
+		optionsScreen = new JTextField();
+		optionsScreen.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		optionsScreen.setEditable(false);
+		screenPanel.add(optionsScreen);
+		optionsScreen.setColumns(10);
 				
 		//================ LEVEL 2 ================ Parent: frame
 		//panel to hold buttons and labels for the calculator
-		JPanel panel_lower = new JPanel();
-		frame.getContentPane().add(panel_lower);
-		panel_lower.setLayout(new FlowLayout());
-		panel_lower.setPreferredSize(new Dimension(360, 400)); //TODO: increase second val when add more components
+		JPanel lowerPanel = new JPanel();
+		frame.getContentPane().add(lowerPanel);
+		lowerPanel.setLayout(new FlowLayout());
+		lowerPanel.setPreferredSize(new Dimension(360, 400)); //TODO: increase second val when add more components
 				
 				
-		//================ LEVEL 3 ================ Parent: panel_lower
+		//================ LEVEL 3 ================ Parent: lowerPanel
 		//buttons for calculator
-		JPanel panel_buttons1 = new JPanel();
-		panel_lower.add(panel_buttons1);
-		panel_buttons1.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
+		JPanel buttonPanel_1 = new JPanel();
+		lowerPanel.add(buttonPanel_1);
+		buttonPanel_1.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
 		
 		//labels for buttons
-		JPanel panel_labels1 = new JPanel();
-		panel_lower.add(panel_labels1);
-		panel_labels1.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
+		JPanel labelPanel_1 = new JPanel();
+		lowerPanel.add(labelPanel_1);
+		labelPanel_1.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
 		
-		JPanel panel_buttons2 = new JPanel();
-		panel_lower.add(panel_buttons2);
-		panel_buttons2.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
+		JPanel buttonPanel_2 = new JPanel();
+		lowerPanel.add(buttonPanel_2);
+		buttonPanel_2.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
 		
-		JPanel panel_buttons3 = new JPanel();
-		panel_lower.add(panel_buttons3);
-		panel_buttons3.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
+		JPanel buttonPanel_3 = new JPanel();
+		lowerPanel.add(buttonPanel_3);
+		buttonPanel_3.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
 		
-		JPanel panel_buttons4 = new JPanel();
-		panel_lower.add(panel_buttons4);
-		panel_buttons4.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
+		JPanel buttonPanel_4 = new JPanel();
+		lowerPanel.add(buttonPanel_4);
+		buttonPanel_4.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
 		
-		JPanel panel_buttons5 = new JPanel();
-		panel_lower.add(panel_buttons5);
-		panel_buttons5.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
+		JPanel buttonPanel_5 = new JPanel();
+		lowerPanel.add(buttonPanel_5);
+		buttonPanel_5.setLayout(new GridLayout(1, 5, DEFAULT_PADDING, DEFAULT_PADDING));
 		
 		
 
 		
 		
 		
-		//================ LEVEL 4 ================ Parent: panel_buttonsX, panel_labelsX
-		JButton btn_shift = new JButton("SHIFT");
+		//================ LEVEL 4 ================ Parent: buttonPanel_X, labelPanel_X
+		JButton btnShift = new JButton("SHIFT");
 		//Set the preferred size of the first button in every row. Each row gets its own grid, so
 		//  we must do this for each one, and as the sizes of every component in a grid layout will
 		//  be the same size, we only have tho set the size for one of the components in the grid.
-		btn_shift.setPreferredSize(DEFAULT_BUTTON_SIZE);
-		btn_shift.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btn_shift.addActionListener(new ActionListener() {
+		btnShift.setPreferredSize(DEFAULT_BUTTON_SIZE);
+		btnShift.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnShift.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (! is_shift) {
-					is_shift = true;
-					screen_option.setText("SHIFT: ON");
+				if (! isShift) {
+					isShift = true;
+					optionsScreen.setText("SHIFT: ON");
 				}
 				else {
-					is_shift = false;
+					isShift = false;
 					// remove the text saying that Shift is on
-					screen_option.setText("");
+					optionsScreen.setText("");
 				}
 			}
 		});
-		btn_shift.setBackground(new Color(240, 230, 140));
-		panel_buttons1.add(btn_shift);
+		btnShift.setBackground(new Color(240, 230, 140));
+		buttonPanel_1.add(btnShift);
 		
 		JButton btnNewButton_7_1 = new JButton("");
 		btnNewButton_7_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton_7_1.setBackground(new Color(220, 220, 220));
-		panel_buttons1.add(btnNewButton_7_1);
+		buttonPanel_1.add(btnNewButton_7_1);
 		
 		JButton btnNewButton_7_2 = new JButton("");
 		btnNewButton_7_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton_7_2.setBackground(new Color(220, 220, 220));
-		panel_buttons1.add(btnNewButton_7_2);
+		buttonPanel_1.add(btnNewButton_7_2);
 		
 		JButton btnNewButton_7_3 = new JButton("");
 		btnNewButton_7_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton_7_3.setBackground(new Color(220, 220, 220));
-		panel_buttons1.add(btnNewButton_7_3);
+		buttonPanel_1.add(btnNewButton_7_3);
 		
 		JButton btnNewButton_7_4 = new JButton("");
 		btnNewButton_7_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton_7_4.setBackground(new Color(220, 220, 220));
-		panel_buttons1.add(btnNewButton_7_4);
+		buttonPanel_1.add(btnNewButton_7_4);
 		
 		JLabel lbl_7 = new JLabel("");
 		lbl_7.setPreferredSize(DEFAULT_LABEL_SIZE);
-		panel_labels1.add(lbl_7);
+		labelPanel_1.add(lbl_7);
 		
 		JLabel lbl_8 = new JLabel("");
-		panel_labels1.add(lbl_8);
+		labelPanel_1.add(lbl_8);
 		
 		JLabel lbl_9 = new JLabel("");
-		panel_labels1.add(lbl_9);
+		labelPanel_1.add(lbl_9);
 		
-		JLabel lbl_del = new JLabel("CE");
-		lbl_del.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_del.setForeground(new Color(184, 134, 11));
-		panel_labels1.add(lbl_del);
+		JLabel lblDel = new JLabel("CE");
+		lblDel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblDel.setForeground(new Color(184, 134, 11));
+		labelPanel_1.add(lblDel);
 		
-		JLabel lbl_ca = new JLabel("");
-		panel_labels1.add(lbl_ca);
+		JLabel lblCa = new JLabel("");
+		labelPanel_1.add(lblCa);
 		
 		JButton btn_7 = new JButton("7");
 		btn_7.setPreferredSize(DEFAULT_BUTTON_SIZE);
 		btn_7.setBackground(new Color(245, 245, 245));
 		btn_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons2.add(btn_7);
+		buttonPanel_2.add(btn_7);
 		btn_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doButtonClick(btn_7.getText(), false);
@@ -439,7 +440,7 @@ public class CalcWindow {
 		JButton btn_8 = new JButton("8");
 		btn_8.setBackground(new Color(245, 245, 245));
 		btn_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons2.add(btn_8);
+		buttonPanel_2.add(btn_8);
 		btn_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doButtonClick(btn_8.getText(), false);
@@ -450,7 +451,7 @@ public class CalcWindow {
 		JButton btn_9 = new JButton("9");
 		btn_9.setBackground(new Color(245, 245, 245));
 		btn_9.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons2.add(btn_9);
+		buttonPanel_2.add(btn_9);
 		btn_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doButtonClick(btn_9.getText(), false);
@@ -458,18 +459,18 @@ public class CalcWindow {
 			}
 		});
 		
-		JButton btn_del = new JButton("DEL");
-		btn_del.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons2.add(btn_del);
-		btn_del.addActionListener(new ActionListener() {
+		JButton btnDel = new JButton("DEL");
+		btnDel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		buttonPanel_2.add(btnDel);
+		btnDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (! is_shift) {
+				if (! isShift) {
 					System.out.println("[ DEL ]");
 					try {
-						// remove the last char from working_expr
+						// remove the last char from workingExpr
 						// (https://www.javatpoint.com/how-to-remove-last-character-from-string-in-java)
-						screen_working_expr.setText(working_expr.substring(0, working_expr.length()-1));
-						working_expr = screen_working_expr.getText();
+						workingExprScreen.setText(workingExpr.substring(0, workingExpr.length()-1));
+						workingExpr = workingExprScreen.getText();
 						}
 					//if DEL is pressed when there is nothing to delete:
 					catch(StringIndexOutOfBoundsException e1)
@@ -478,32 +479,32 @@ public class CalcWindow {
 				
 				else {
 					System.out.println("[ CE ]");
-					is_shift = false;
-					screen_option.setText("");
+					isShift = false;
+					optionsScreen.setText("");
 				}
 			}
 		});
-		btn_del.setBackground(Color.PINK);
-		btn_del.setToolTipText("Backspace");
+		btnDel.setBackground(Color.PINK);
+		btnDel.setToolTipText("Backspace");
 		
-		JButton btn_ca = new JButton("CA");
-		btn_ca.addActionListener(new ActionListener() {
+		JButton btnCa = new JButton("CA");
+		btnCa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				working_expr = "";
-				screen_working_expr.setText("");
-				screen_answer.setText("");
+				workingExpr = "";
+				workingExprScreen.setText("");
+				answerScreen.setText("");
 			}
 		});
-		btn_ca.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons2.add(btn_ca);
-		btn_ca.setBackground(new Color(250, 128, 114));
-		btn_ca.setToolTipText("Clear All");
+		btnCa.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		buttonPanel_2.add(btnCa);
+		btnCa.setBackground(new Color(250, 128, 114));
+		btnCa.setToolTipText("Clear All");
 		
 		JButton btn_4 = new JButton("4");
 		btn_4.setPreferredSize(DEFAULT_BUTTON_SIZE);
 		btn_4.setBackground(new Color(245, 245, 245));
 		btn_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons3.add(btn_4);
+		buttonPanel_3.add(btn_4);
 		btn_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doButtonClick(btn_4.getText(), false);
@@ -514,7 +515,7 @@ public class CalcWindow {
 		JButton btn_5 = new JButton("5");
 		btn_5.setBackground(new Color(245, 245, 245));
 		btn_5.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons3.add(btn_5);
+		buttonPanel_3.add(btn_5);
 		btn_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doButtonClick(btn_5.getText(), false);
@@ -525,7 +526,7 @@ public class CalcWindow {
 		JButton btn_6 = new JButton("6");
 		btn_6.setBackground(new Color(245, 245, 245));
 		btn_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons3.add(btn_6);
+		buttonPanel_3.add(btn_6);
 		btn_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doButtonClick(btn_6.getText(), false);
@@ -533,25 +534,25 @@ public class CalcWindow {
 			}
 		});
 		
-		JButton btn_multiply = new JButton("*");
-		btn_multiply.setBackground(new Color(220, 220, 220));
-		btn_multiply.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons3.add(btn_multiply);
-		btn_multiply.addActionListener(new ActionListener() {
+		JButton btnMultiply = new JButton("*");
+		btnMultiply.setBackground(new Color(220, 220, 220));
+		btnMultiply.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		buttonPanel_3.add(btnMultiply);
+		btnMultiply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				doButtonClick(btn_multiply.getText(), true);
-				//displayCurrentAnswer(btn_multiply.getText());
+				doButtonClick(btnMultiply.getText(), true);
+				//displayCurrentAnswer(btnMultiply.getText());
 			}
 		});
 		
-		JButton btn_divide = new JButton("/");
-		btn_divide.setBackground(new Color(220, 220, 220));
-		btn_divide.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons3.add(btn_divide);
-		btn_divide.addActionListener(new ActionListener() {
+		JButton btnDivide = new JButton("/");
+		btnDivide.setBackground(new Color(220, 220, 220));
+		btnDivide.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		buttonPanel_3.add(btnDivide);
+		btnDivide.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				doButtonClick(btn_divide.getText(), true);
-				//displayCurrentAnswer(btn_divide.getText());
+				doButtonClick(btnDivide.getText(), true);
+				//displayCurrentAnswer(btnDivide.getText());
 			}
 		});
 		
@@ -559,7 +560,7 @@ public class CalcWindow {
 		btn_1.setPreferredSize(DEFAULT_BUTTON_SIZE);
 		btn_1.setBackground(new Color(245, 245, 245));
 		btn_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons4.add(btn_1);
+		buttonPanel_4.add(btn_1);
 		btn_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doButtonClick(btn_1.getText(), false);
@@ -570,7 +571,7 @@ public class CalcWindow {
 		JButton btn_2 = new JButton("2");
 		btn_2.setBackground(new Color(245, 245, 245));
 		btn_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons4.add(btn_2);
+		buttonPanel_4.add(btn_2);
 		btn_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doButtonClick(btn_2.getText(), false);
@@ -581,7 +582,7 @@ public class CalcWindow {
 		JButton btn_3 = new JButton("3");
 		btn_3.setBackground(new Color(245, 245, 245));
 		btn_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons4.add(btn_3);
+		buttonPanel_4.add(btn_3);
 		btn_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doButtonClick(btn_3.getText(), false);
@@ -589,25 +590,25 @@ public class CalcWindow {
 			}
 		});
 		
-		JButton btn_plus = new JButton("+");
-		btn_plus.setBackground(new Color(220, 220, 220));
-		btn_plus.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons4.add(btn_plus);
-		btn_plus.addActionListener(new ActionListener() {
+		JButton btnPlus = new JButton("+");
+		btnPlus.setBackground(new Color(220, 220, 220));
+		btnPlus.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		buttonPanel_4.add(btnPlus);
+		btnPlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				doButtonClick(btn_plus.getText(), true);
-				//displayCurrentAnswer(btn_plus.getText());
+				doButtonClick(btnPlus.getText(), true);
+				//displayCurrentAnswer(btnPlus.getText());
 			}
 		});
 		
-		JButton btn_minus = new JButton("-");
-		btn_minus.setBackground(new Color(220, 220, 220));
-		btn_minus.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons4.add(btn_minus);
-		btn_minus.addActionListener(new ActionListener() {
+		JButton btnMinus = new JButton("-");
+		btnMinus.setBackground(new Color(220, 220, 220));
+		btnMinus.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		buttonPanel_4.add(btnMinus);
+		btnMinus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				doButtonClick(btn_minus.getText(), true);
-				//displayCurrentAnswer(btn_minus.getText());
+				doButtonClick(btnMinus.getText(), true);
+				//displayCurrentAnswer(btnMinus.getText());
 			}
 		});
 		
@@ -615,7 +616,7 @@ public class CalcWindow {
 		btn_0.setPreferredSize(DEFAULT_BUTTON_SIZE);
 		btn_0.setBackground(new Color(245, 245, 245));
 		btn_0.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons5.add(btn_0);
+		buttonPanel_5.add(btn_0);
 		btn_0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doButtonClick(btn_0.getText(), false);
@@ -623,33 +624,32 @@ public class CalcWindow {
 			}
 		});
 		
-		JButton btn_decimal = new JButton(".");
-		btn_decimal.setBackground(new Color(245, 245, 245));
-		btn_decimal.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons5.add(btn_decimal);
-		btn_decimal.addActionListener(new ActionListener() {
+		JButton btnDecimal = new JButton(".");
+		btnDecimal.setBackground(new Color(245, 245, 245));
+		btnDecimal.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		buttonPanel_5.add(btnDecimal);
+		btnDecimal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				doButtonClick(btn_decimal.getText(), false);
-				//addToWorkingExpression(btn_decimal.getText());
+				doButtonClick(btnDecimal.getText(), false);
+				//addToWorkingExpression(btnDecimal.getText());
 			}
 		});
 		
 		JButton btnNewButton_7 = new JButton("");
 		btnNewButton_7.setBackground(new Color(220, 220, 220));
 		btnNewButton_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons5.add(btnNewButton_7);
+		buttonPanel_5.add(btnNewButton_7);
 		
 		JButton btnNewButton_8 = new JButton("");
 		btnNewButton_8.setBackground(new Color(220, 220, 220));
 		btnNewButton_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_buttons5.add(btnNewButton_8);
+		buttonPanel_5.add(btnNewButton_8);
 		
-		btn_equals.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btn_equals.setBackground(new Color(153, 204, 255));
-		panel_buttons5.add(btn_equals);
-		btn_equals.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	
-				System.out.println(decimalPrecision);
+		btnEquals.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnEquals.setBackground(new Color(153, 204, 255));
+		buttonPanel_5.add(btnEquals);
+		btnEquals.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				// (http://javaluator.sourceforge.net/en/doc/tutorial.php)
 				
 				/*
@@ -666,28 +666,26 @@ public class CalcWindow {
 				 * - https://stackoverflow.com/q/2824515/8042538	<--
 				 */
 			    
-			    // Evaluate the working_expr
+			    // Evaluate the workingExpr
 			    try {
-			    	screen_answer.setText(evaluateExpression(working_expr));
-			    	
+			    	answerScreen.setText(evaluateExpression(workingExpr));
 			    }
-			    // if "=" is pressed before anything else, then don't display anything on screen_answer
+			    // if "=" is pressed before anything else, then don't display anything on answerScreen
 			    catch(IllegalArgumentException e1) {
 			    }
 			    
-			    // add the "=" to the working expression (unless there is already an "=" there), and display
+			    // now add the "=" to the working expression (unless there is already an "=" there), and display
 			    try {
-			    	String working_expr_last_char = working_expr.substring(working_expr.length()-1);
-				    if(working_expr_last_char != "=")
+			    	String workingExprLastChar = workingExpr.substring(workingExpr.length()-1);
+				    if(workingExprLastChar != "=")
 				    	{
-				    	working_expr += btn_equals.getText();
-					    screen_working_expr.setText(working_expr);
+				    	workingExpr += btnEquals.getText();
+					    workingExprScreen.setText(workingExpr);
 				    	}
 			   		}
-			    // if "=" is pressed before anything else, then don't display anything on screen_working_expr
+			    // if "=" is pressed before anything else, then don't display anything on workingExprScreen
 			    catch(StringIndexOutOfBoundsException e1) {
 			    	}
-			    
 			}
 		});
 	}
@@ -699,42 +697,41 @@ public class CalcWindow {
 	 */
 	private void addToWorkingExpression(String btnText) {
 		//System.out.println("addToWorkingExpression RUN");
-		working_expr += btnText;
-		screen_working_expr.setText(working_expr);
+		workingExpr += btnText;
+		workingExprScreen.setText(workingExpr);
 	}
 	
 	
 	/**
-	 * 
+	 * Given a mathematical expression, evaluate it to get an answer, then round it to the correct
+	 * precision and with the correct rounding method (decimal places, or significant figures). Return
+	 * the rounded answer as a string, and in standard form.
 	 * @param expression
 	 */
 	public String evaluateExpression(String expression) {
 		answer = evaluator.evaluate(expression);
-    	// Output the result to screen_answer
-		//   Round the answer to the decimal precision defined in the menu settings
-		String answer_string = null;
+		//Round the answer to the decimal precision defined in the menu settings
+		String answerString = null;
 		if (roundingMethod == "S")
-			//TODO: add more unit tests for numbers in article (cover all cases!!!)
 		{
-			BigDecimal answer_bd = new BigDecimal(answer);
-			BigDecimal answer_rounded = answer_bd.round(new MathContext(decimalPrecision));
-			//in case answer_rounded is in scientific form, convert it to standard form
-			// (example: rounding 10.2 to 1sf: answer_rounded is 1E+1, answer_string is 10)
-			answer_string = answer_rounded.toPlainString(); // (https://stackoverflow.com/a/31294907/8042538)
-			//String output = String.valueOf(answer_string); //TODO: is this needed?
+			BigDecimal answerBd = new BigDecimal(answer);
+			BigDecimal answerRounded = answerBd.round(new MathContext(decimalPrecision));
+			//in case answerRounded is in scientific form, convert to standard form (using String.valueOf isn't good enough)
+			// (example: rounding 10.2 to 1sf: answerRounded is 1E+1, answerString is 10)
+			answerString = answerRounded.toPlainString(); // (https://stackoverflow.com/a/31294907/8042538)
 		}
-		else
+		else //if roundingMethod == "D"
 		{
-			BigDecimal answer_rounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.HALF_UP);
-			answer_string = String.valueOf(answer_rounded); // (https://stackoverflow.com/a/15530411/8042538)
+			BigDecimal answerRounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.HALF_UP);
+			answerString = String.valueOf(answerRounded); // (https://stackoverflow.com/a/15530411/8042538)
 		}
-	    System.out.println(answer_string);
-	    return answer_string;
+	    //System.out.println(answerString);
+	    return answerString;
 	}
 	
 	
 	/**
-	 * Calculate the current working_expr and display the output to the answer screen.
+	 * Calculate the current workingExpr and display the output to the answer screen.
 	 * This method is called when an operator is clicked.
 	 * @param btnText
 	 */
@@ -742,14 +739,14 @@ public class CalcWindow {
 		String text = "";
 		if (! isOperator) {
 			addToWorkingExpression(btnText);
-			text = evaluateExpression(working_expr);
-			//screen_answer.setText(working_expr); //this is included in evaluateExpression ^
+			text = evaluateExpression(workingExpr);
+			//answerScreen.setText(workingExpr); //this is included in evaluateExpression ^
 		}
 		else {
 			//if the last char was an operator, then we need to take it off the expression before evaluating
 			addToWorkingExpression(btnText);
-			String working_expr_except_last_char = working_expr.substring(0, working_expr.length()-1);
-			text = evaluateExpression(working_expr_except_last_char);
+			String workingExprExceptLastChar = workingExpr.substring(0, workingExpr.length()-1);
+			text = evaluateExpression(workingExprExceptLastChar);
 		}
 		//convert to scientific notation if number is too long
 		//TODO: unit tests!!!
@@ -779,7 +776,7 @@ public class CalcWindow {
 			Integer firstDigit = (int) Math.floor(num);
 			text = coefficient + "E" + sign * firstDigit;
 		}
-		screen_answer.setText(text);
+		answerScreen.setText(text);
 	}
 
 	
@@ -817,8 +814,8 @@ public class CalcWindow {
 			
 			//if last char was a number, add "=" to the expression on the screen for clarity
 			if (! isOperator) {
-				//this does not affect working_expr, only the screen, so this change is temporary
-				screen_working_expr.setText(working_expr + "=");
+				//this does not affect workingExpr, only the screen, so this change is temporary
+				workingExprScreen.setText(workingExpr + "=");
 			}
 		}
 		
