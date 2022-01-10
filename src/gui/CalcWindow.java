@@ -710,16 +710,17 @@ public class CalcWindow {
 	 */
 	public String evaluateExpression(String expression) {
 		answer = evaluator.evaluate(expression);
-		System.out.println(answer);
-		System.out.println(answer.getClass());
 		
-		//TODO: BUG: doing 0.0 gives NaN, gives error (wanted: 0/0 = 0)
-		//possible way to fix: evaluate the expression exl the last character (the 0). if it is 0, then
+		//TODO: BUG: doing 0.0 gives NaN (wanted: 0/0 = 0)
+		//possible fix: evaluate the expression excl the last character (the 0). if it is 0, then
 		//  we know the whole expr was 0/0. Give 0 as result.
-		//TODO: doing infinity*0 gives NaN, gives error (eg: 1/0*0) (wanted: anything*0 = 0)
+		//TODO: doing infinity*0 gives NaN (eg: 1/0*0) (wanted: anything*0 = 0)
 		String answerString = null;
-		//dividing by 0 gives infinity. We only want to round the answer if it is an actual number.
-		if (answer != Double.POSITIVE_INFINITY)
+		
+		System.out.println(answer == Double.NaN);
+		System.out.println(String.valueOf(answer) == String.valueOf(Double.NaN));
+		
+		if (String.valueOf(answer) != String.valueOf(Double.NaN) && answer != Double.POSITIVE_INFINITY)
 		{
 			//Round the answer to the decimal precision defined in the menu settings
 			if (roundingMethod == "S")
@@ -738,9 +739,9 @@ public class CalcWindow {
 		}
 		else
 		{
-			answerString = "Infinity";
+			answerString = String.valueOf(answer);
 		}
-		//System.out.println(answerString);
+		System.out.println(answerString);
 	    return answerString;
 	}
 	
