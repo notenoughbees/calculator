@@ -711,7 +711,9 @@ public class CalcWindow {
 	 * @param expression
 	 */
 	public String evaluateExpression(String expression) {
+		System.out.println(workingExpr);
 		answer = evaluator.evaluate(expression);
+		System.out.println(answer);
 		
 		//TODO: BUG: doing 0/0 gives NaN (wanted: 0/0 = 0)
 		//TODO: BUG: doing infinity*0 gives NaN (eg: 1/0*0) (wanted: anything*0 = 0)
@@ -743,15 +745,23 @@ public class CalcWindow {
 			}
 			else
 			{
+				System.out.println("111a");
 				//  In the Infinity*0 case, we also want the answer to be 0.
 				//    Here, we check if the last two chars of workingExpr are "*0". If so, change the answer from NaN to 0.
-				if (workingExpr.substring(workingExpr.length()-2).equals("*0"))
+				//System.out.println(workingExpr.substring(workingExpr.length()-1, workingExpr.length()+1));
+				System.out.println(workingExpr);
+				System.out.println(workingExpr.substring(workingExpr.length()-2));
+				if (workingExpr.substring(workingExpr.length()-3).equals("*0"))
 					//TODO: UNIT TESTS
 				{
+					System.out.println("222a");
 					answerString = "0";
 				}
-				
-				answerString = String.valueOf(answer);
+				else
+				{
+					System.out.println("333");
+					answerString = String.valueOf(answer);
+				}
 			
 			}
 		}
@@ -766,7 +776,30 @@ public class CalcWindow {
 			{
 				System.out.println("555");
 				answerString = "0";
+				System.out.println(answerString);
+				return answerString;
 			}
+			
+			
+			
+			System.out.println("111b");
+			//  In the Infinity*0 case, we also want the answer to be 0.
+			//    Here, we check if the last two chars of workingExpr are "*0". If so, change the answer from NaN to 0.
+			//System.out.println(workingExpr.substring(workingExpr.length()-1, workingExpr.length()+1));
+			System.out.println(workingExpr);
+			String last2chars = workingExpr.substring(workingExpr.length()-2);
+			System.out.println(last2chars);
+			if (last2chars.equals("*0"))
+				//TODO: UNIT TESTS
+			{
+				System.out.println("222b");
+				answerString = "0";
+				System.out.println(answerString);
+				return answerString;
+			}
+			
+			
+			
 			else
 			{
 				System.out.println("666");
