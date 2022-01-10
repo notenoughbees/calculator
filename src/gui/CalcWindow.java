@@ -49,6 +49,8 @@ public class CalcWindow {
 	JButton btnEquals = new JButton("=");
 	private Integer calculationMethod = 1;
 	private String workingExpr = "";
+	private String workingExprLastChar; //TODO: make method to calculate this (same calcualtion every time)
+	//private String workingExprExceptLastChar;
 	private DoubleEvaluator evaluator = new DoubleEvaluator();
 	private Double answer;
 
@@ -676,7 +678,7 @@ public class CalcWindow {
 			    
 			    // now add the "=" to the working expression (unless there is already an "=" there), and display
 			    try {
-			    	String workingExprLastChar = workingExpr.substring(workingExpr.length()-1);
+			    	workingExprLastChar = workingExpr.substring(workingExpr.length()-1);
 				    if(workingExprLastChar != "=")
 				    	{
 				    	workingExpr += btnEquals.getText();
@@ -696,7 +698,7 @@ public class CalcWindow {
 	 * @param btnText
 	 */
 	private void addToWorkingExpression(String btnText) {
-		//System.out.println("addToWorkingExpression RUN");
+		System.out.println("addToWorkingExpression RUN");
 		workingExpr += btnText;
 		workingExprScreen.setText(workingExpr);
 	}
@@ -711,35 +713,66 @@ public class CalcWindow {
 	public String evaluateExpression(String expression) {
 		answer = evaluator.evaluate(expression);
 		
-		//TODO: BUG: doing 0.0 gives NaN (wanted: 0/0 = 0)
-		//possible fix: evaluate the expression excl the last character (the 0). if it is 0, then
-		//  we know the whole expr was 0/0. Give 0 as result.
-		//TODO: doing infinity*0 gives NaN (eg: 1/0*0) (wanted: anything*0 = 0)
+		//TODO: BUG: doing 0/0 gives NaN (wanted: 0/0 = 0)
+		//TODO: BUG: doing infinity*0 gives NaN (eg: 1/0*0) (wanted: anything*0 = 0)
 		String answerString = null;
 		
-		System.out.println(answer == Double.NaN);
-		System.out.println(String.valueOf(answer) == String.valueOf(Double.NaN));
+		//Check if the answer is actually a number (not NaN or infinity), as we cannot round it otherwise.
 		
-		if (String.valueOf(answer) != String.valueOf(Double.NaN) && answer != Double.POSITIVE_INFINITY)
+		//We must convert to strings because for some reason, when the answer is Not A Number, we have
+		//  answer != Double.NaN (bad), but String.valueOf(answer) = String.valueOf(Double.NaN) (good).
+		if (String.valueOf(answer) != String.valueOf(Double.NaN))
 		{
-			//Round the answer to the decimal precision defined in the menu settings
-			if (roundingMethod == "S")
+			System.out.println("000");
+			if (answer != Double.POSITIVE_INFINITY)
 			{
-				BigDecimal answerBd = new BigDecimal(answer);
-				BigDecimal answerRounded = answerBd.round(new MathContext(decimalPrecision));
-				//in case answerRounded is in scientific form, convert to standard form (using String.valueOf isn't good enough)
-				// (example: rounding 10.2 to 1sf: answerRounded is 1E+1, answerString is 10)
-				answerString = answerRounded.toPlainString(); // (https://stackoverflow.com/a/31294907/8042538)
+				//Round the answer to the decimal precision defined in the menu settings
+				if (roundingMethod == "S")
+				{
+					BigDecimal answerBd = new BigDecimal(answer);
+					BigDecimal answerRounded = answerBd.round(new MathContext(decimalPrecision));
+					//in case answerRounded is in scientific form, convert to standard form (using String.valueOf isn't good enough)
+					// (example: rounding 10.2 to 1sf: answerRounded is 1E+1, answerString is 10)
+					answerString = answerRounded.toPlainString(); // (https://stackoverflow.com/a/31294907/8042538)
+				}
+				else //if roundingMethod == "D"
+				{
+					BigDecimal answerRounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.HALF_UP);
+					answerString = String.valueOf(answerRounded); // (https://stackoverflow.com/a/15530411/8042538)
+				}	
 			}
-			else //if roundingMethod == "D"
+			else
 			{
-				BigDecimal answerRounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.HALF_UP);
-				answerString = String.valueOf(answerRounded); // (https://stackoverflow.com/a/15530411/8042538)
+				//  In the Infinity*0 case, we also want the answer to be 0.
+				//    Here, we check if the last two chars of workingExpr are "*0". If so, change the answer from NaN to 0.
+				if (workingExpr.substring(workingExpr.length()-2).equals("*0"))
+					//TODO: UNIT TESTS
+				{
+					answerString = "0";
+				}
+				
+				answerString = String.valueOf(answer);
+			
 			}
 		}
 		else
 		{
-			answerString = String.valueOf(answer);
+			System.out.println("444");
+			//we can get answer = NaN when doing 0/0 or Infinity*0.
+			//  In the 0/0 case, we actually want the answer to be 0 though.
+			//    To do this, check if workingExpr = "0/0". If so, change the result from NaN to 0.
+			workingExprLastChar = workingExpr.substring(workingExpr.length()-1);
+			if (workingExpr.equals("0/0")) // (https://stackoverflow.com/a/12662268/8042538) //TODO: explain
+			{
+				System.out.println("555");
+				answerString = "0";
+			}
+			else
+			{
+				System.out.println("666");
+				answerString = String.valueOf(answer);
+			}
+			
 		}
 		System.out.println(answerString);
 	    return answerString;
@@ -760,7 +793,7 @@ public class CalcWindow {
 		else {
 			//if the last char was an operator, then we need to take it off the expression before evaluating
 			addToWorkingExpression(btnText);
-			String workingExprExceptLastChar = workingExpr.substring(0, workingExpr.length()-1);
+			String workingExprExceptLastChar = calculateWorkingExprExceptLastNChars(workingExpr);
 			text = evaluateExpression(workingExprExceptLastChar);
 		}
 		//convert to scientific notation if number is too long
@@ -850,4 +883,17 @@ public class CalcWindow {
 	
 	public static void setRoundingMethod(String newRoundingMethod) 
 		{roundingMethod = newRoundingMethod;}
+	
+	private String calculateWorkingExprExceptLastNChars(String workingExpr)
+	{
+		String workingExprExceptLastNChars = workingExpr.substring(0, workingExpr.length()-1);
+		return workingExprExceptLastNChars;
+	}
+	
+	//overloaded method with extra param (simulates the default param for the method being 1)
+	private String calculateWorkingExprExceptLastNChars(String workingExpr, Integer n)
+	{
+		String workingExprExceptLastNChars = workingExpr.substring(0, workingExpr.length()-n);
+		return workingExprExceptLastNChars;
+	}
 }
