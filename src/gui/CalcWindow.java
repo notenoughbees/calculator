@@ -710,22 +710,37 @@ public class CalcWindow {
 	 */
 	public String evaluateExpression(String expression) {
 		answer = evaluator.evaluate(expression);
-		//Round the answer to the decimal precision defined in the menu settings
+		System.out.println(answer);
+		System.out.println(answer.getClass());
+		
+		//TODO: BUG: doing 0.0 gives NaN, gives error (wanted: 0/0 = 0)
+		//possible way to fix: evaluate the expression exl the last character (the 0). if it is 0, then
+		//  we know the whole expr was 0/0. Give 0 as result.
+		//TODO: doing infinity*0 gives NaN, gives error (eg: 1/0*0) (wanted: anything*0 = 0)
 		String answerString = null;
-		if (roundingMethod == "S")
+		//dividing by 0 gives infinity. We only want to round the answer if it is an actual number.
+		if (answer != Double.POSITIVE_INFINITY)
 		{
-			BigDecimal answerBd = new BigDecimal(answer);
-			BigDecimal answerRounded = answerBd.round(new MathContext(decimalPrecision));
-			//in case answerRounded is in scientific form, convert to standard form (using String.valueOf isn't good enough)
-			// (example: rounding 10.2 to 1sf: answerRounded is 1E+1, answerString is 10)
-			answerString = answerRounded.toPlainString(); // (https://stackoverflow.com/a/31294907/8042538)
+			//Round the answer to the decimal precision defined in the menu settings
+			if (roundingMethod == "S")
+			{
+				BigDecimal answerBd = new BigDecimal(answer);
+				BigDecimal answerRounded = answerBd.round(new MathContext(decimalPrecision));
+				//in case answerRounded is in scientific form, convert to standard form (using String.valueOf isn't good enough)
+				// (example: rounding 10.2 to 1sf: answerRounded is 1E+1, answerString is 10)
+				answerString = answerRounded.toPlainString(); // (https://stackoverflow.com/a/31294907/8042538)
+			}
+			else //if roundingMethod == "D"
+			{
+				BigDecimal answerRounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.HALF_UP);
+				answerString = String.valueOf(answerRounded); // (https://stackoverflow.com/a/15530411/8042538)
+			}
 		}
-		else //if roundingMethod == "D"
+		else
 		{
-			BigDecimal answerRounded = new BigDecimal(answer).setScale(decimalPrecision, RoundingMode.HALF_UP);
-			answerString = String.valueOf(answerRounded); // (https://stackoverflow.com/a/15530411/8042538)
+			answerString = "Infinity";
 		}
-	    //System.out.println(answerString);
+		//System.out.println(answerString);
 	    return answerString;
 	}
 	
@@ -740,7 +755,6 @@ public class CalcWindow {
 		if (! isOperator) {
 			addToWorkingExpression(btnText);
 			text = evaluateExpression(workingExpr);
-			//answerScreen.setText(workingExpr); //this is included in evaluateExpression ^
 		}
 		else {
 			//if the last char was an operator, then we need to take it off the expression before evaluating
