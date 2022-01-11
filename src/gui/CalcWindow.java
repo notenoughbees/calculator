@@ -698,7 +698,7 @@ public class CalcWindow {
 	 * @param btnText
 	 */
 	private void addToWorkingExpression(String btnText) {
-		System.out.println("addToWorkingExpression RUN");
+		//System.out.println("addToWorkingExpression RUN");
 		workingExpr += btnText;
 		workingExprScreen.setText(workingExpr);
 	}
@@ -711,21 +711,19 @@ public class CalcWindow {
 	 * @param expression
 	 */
 	public String evaluateExpression(String expression) {
-		System.out.println(workingExpr);
 		answer = evaluator.evaluate(expression);
-		System.out.println(answer);
+		//System.out.println(answer);
 		
-		//TODO: BUG: doing 0/0 gives NaN (wanted: 0/0 = 0)
-		//TODO: BUG: doing infinity*0 gives NaN (eg: 1/0*0) (wanted: anything*0 = 0)
+		//TODO: unit tests for:
+		//  0/0 = 0 (NOT NaN)
+		//  infinity*0 = 0 (eg: 1/0*0) (NOT NaN)
 		String answerString = null;
 		
 		//Check if the answer is actually a number (not NaN or infinity), as we cannot round it otherwise.
-		
-		//We must convert to strings because for some reason, when the answer is Not A Number, we have
-		//  answer != Double.NaN (bad), but String.valueOf(answer) = String.valueOf(Double.NaN) (good).
+		//  Here, we must convert to strings because for some reason, when the answer is NaN, we have
+		//    answer != Double.NaN (bad), but String.valueOf(answer) = String.valueOf(Double.NaN) (good).
 		if (String.valueOf(answer) != String.valueOf(Double.NaN))
 		{
-			System.out.println("000");
 			if (answer != Double.POSITIVE_INFINITY)
 			{
 				//Round the answer to the decimal precision defined in the menu settings
@@ -733,9 +731,9 @@ public class CalcWindow {
 				{
 					BigDecimal answerBd = new BigDecimal(answer);
 					BigDecimal answerRounded = answerBd.round(new MathContext(decimalPrecision));
-					//in case answerRounded is in scientific form, convert to standard form (using String.valueOf isn't good enough)
+					//in case answerRounded is in scientific form, convert to standard form 
 					// (example: rounding 10.2 to 1sf: answerRounded is 1E+1, answerString is 10)
-					answerString = answerRounded.toPlainString(); // (https://stackoverflow.com/a/31294907/8042538)
+					answerString = answerRounded.toPlainString(); // (https://stackoverflow.com/a/31294907/8042538) (using String.valueOf isn't good enough here)
 				}
 				else //if roundingMethod == "D"
 				{
@@ -745,69 +743,33 @@ public class CalcWindow {
 			}
 			else
 			{
-				System.out.println("111a");
-				//  In the Infinity*0 case, we also want the answer to be 0.
-				//    Here, we check if the last two chars of workingExpr are "*0". If so, change the answer from NaN to 0.
-				//System.out.println(workingExpr.substring(workingExpr.length()-1, workingExpr.length()+1));
-				System.out.println(workingExpr);
-				System.out.println(workingExpr.substring(workingExpr.length()-2));
-				if (workingExpr.substring(workingExpr.length()-3).equals("*0"))
-					//TODO: UNIT TESTS
-				{
-					System.out.println("222a");
-					answerString = "0";
-				}
-				else
-				{
-					System.out.println("333");
-					answerString = String.valueOf(answer);
-				}
-			
+				//if the answer is NOT NaN, and is Infinity, then just use this: display the answer as "Infinity"
+				answerString = String.valueOf(answer);
 			}
 		}
 		else
 		{
-			System.out.println("444");
 			//we can get answer = NaN when doing 0/0 or Infinity*0.
 			//  In the 0/0 case, we actually want the answer to be 0 though.
 			//    To do this, check if workingExpr = "0/0". If so, change the result from NaN to 0.
 			workingExprLastChar = workingExpr.substring(workingExpr.length()-1);
-			if (workingExpr.equals("0/0")) // (https://stackoverflow.com/a/12662268/8042538) //TODO: explain
+			if (workingExpr.equals("0/0")) // (https://stackoverflow.com/a/12662268/8042538) why to use .equals() instead of ==
 			{
-				System.out.println("555");
 				answerString = "0";
-				System.out.println(answerString);
-				return answerString;
 			}
-			
-			
-			
-			System.out.println("111b");
 			//  In the Infinity*0 case, we also want the answer to be 0.
 			//    Here, we check if the last two chars of workingExpr are "*0". If so, change the answer from NaN to 0.
-			//System.out.println(workingExpr.substring(workingExpr.length()-1, workingExpr.length()+1));
-			System.out.println(workingExpr);
-			String last2chars = workingExpr.substring(workingExpr.length()-2);
-			System.out.println(last2chars);
-			if (last2chars.equals("*0"))
-				//TODO: UNIT TESTS
+			else if (workingExpr.substring(workingExpr.length()-2).equals("*0"))
 			{
-				System.out.println("222b");
 				answerString = "0";
-				System.out.println(answerString);
-				return answerString;
 			}
-			
-			
-			
+			//in neither of these cases, then the answer doesn't need to be changed - just get the string and make answerString.
 			else
 			{
-				System.out.println("666");
 				answerString = String.valueOf(answer);
 			}
-			
 		}
-		System.out.println(answerString);
+		//System.out.println(answerString);
 	    return answerString;
 	}
 	
